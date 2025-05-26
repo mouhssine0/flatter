@@ -1,0 +1,3427 @@
+Interface Definition
+1，Request Header
+1.1 url
+https://developers.cjdropshipping.com/api2.0/v1/setting/account/set
+
+url：https://developers.cjdropshipping.com
+identification：api2.0
+version：v1
+uri: /setting/account/set
+1.2 header
+Name	Required	Note
+Content-Type	Yes	default : application/json
+CJ-Access-Token	Yes	default : Your secret key in CJ
+1.3 curl
+curl --location --request PATCH 'https://developers.cjdropshipping.com/api2.0/v1/setting/account/set' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxx' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "openName": "",
+                    "openEmail": ""
+                }'
+2，Return
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← SandboxInterface Field Definition  Interface Field Definitions
+1 Base Fields
+1 System Fields
+1.1 Return
+Field	Field Meaning	Field Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.2 Paging
+Field	Field Meaning	Field Type	Length	Note
+pageNum	Number of current pages	int	20	
+pageSize	Number of items returned per page	int	20	
+total	total	int	20	
+list			list	
+2 Public Fields
+2.1 Region
+Field	Field Meaning	Field Type	Length	Note
+areaId	area id	string	200	
+areaEn	area name	string	200	
+countryCode	country code	string	200	
+2.2 People
+Field	Field Meaning	Field Type	Length	Note
+creater	creator	string	200	
+createTime	createTime	string	200	
+updater	modifier	string	200	
+updateTime	modifyTime	string	200	
+2.3 Other
+Field	Field Meaning	Field Type	Length	Note
+sourceFrom	source	byte	4	
+comment	comment	string	200	
+Remarks:
+
+sourceFrom: 0-erp entry, 1-store search entry, 2-cj search entry
+
+2 Transaction Fields
+1 Authentication Fields
+1.1 Authorization
+Field	Definition	Type	Length	Note
+email	Email	string	200	
+password	Password	string	200	
+1.2 Token
+Field	Definition	Type	Length	Note
+accessToken	Access Token	string	200	
+accessTokenExpiryDate	Access Token expiry time	string	200	Default 7 days
+refreshToken	Refresh Token	string	200	
+refreshTokenExpiryDate	Refresh Token expiry time	string	200	Default 180 days
+2 Settings Fields
+2.1 Account
+Field	Definition	Type	Length	Note
+openId	Account ID	string	200	
+openName	Account Name	string	200	
+openEmail	Account Email	string	200	
+root	Root access	string	200	root：NO_PERMISSION - not authorized
+GENERAL - general account
+VIP - VIP account
+ADMIN - administrator
+isSandbox	(Whether) Sandbox account	byte	4	
+2.2 API Setting
+Field	Definition	Type	Length	Note
+setting	Settings	list	200	
+quotaLimits	Quota limits	list		Applicable on specific URLs
+quotaUrl	Quota URL	string	200	
+quotaLimit	Quota limit	int	20	
+quotaType	Quota Type	byte	4	0-total，1-per year，2-per year，3-per quarter，4-per day，5-per hour
+qpsLimit	QPS limit	int	20	Account queries per second
+3 Product Fields
+3.1 Product
+Field	Definition	Type	Length	Note
+pid	Product ID	string	200	
+productName	Product name	list	20	
+productNameEn	Product name（EN）	string	200	
+productSku	Product sku	string	200	
+productImage	Product image	string	200	
+productWeight	Product weight	int	200	unit: g
+productType	Product type	byte	200	
+productUnit	Product unit	string	48	
+categoryId	Category id	string	200	
+categoryName	Category name	string	200	
+entryCode	HS code	string	200	
+entryName	Customs name	string	200	
+entryNameEn	Customs name (EN)	string	200	
+materialName	Material	string	200	
+materialNameEn	Material (EN)	string	200	
+materialKey	Material attribute	string	200	
+packWeight	Package weight	int	200	util: g
+packingName	Package name	string	200	
+packingNameEn	Package name (EN）	string	200	
+packingKey	Package attribute	string	200	
+isActive	(Whether) Active	boolean	1	
+description	Description	string	200	
+Product Type
+
+Product Type	Type
+ORDINARY_PRODUCT	Ordinary product
+SERVICE_PRODUCT	Service product
+PACKAGING_PRODUCT	Packaging product
+SUPPLIER_PRODUCT	Supplier product
+SUPPLIER_SHIPPED_PRODUCT	Supplier shipped product
+3.2 Variant
+Field	Definition	Type	Length	Note
+vid	Variant ID	string	200	
+variantName	Variant name	string	200	
+variantNameEn	Variant name (EN)	string	200	
+variantSku	Variant SKU	string	200	
+variantUnit	Variant Unit	string	200	
+variantProperty	Variant Property	string	200	
+variantKey	Variant Key	string	200	
+variantLength	Variant Length	int	200	unit: mm
+variantWidth	Variant Width	int	200	unit: mm
+variantHeight	Variant Height	int	200	unit: mm
+variantVolume	Variant Volume	int	200	unit: mm3
+variantWeight	Variant Weight	int	200	unit: g
+variantSellPrice	Variant Sell Price	double	200	unit: $ (USD)
+3.3 Supplier
+Field	Definition	Type	Length	Note
+3.4 Storage
+Field	Definition	Type	Length	Note
+storageNum	Available inventory	int	20	
+queryTime	Refresh rate	string	200	
+4 Storage Fields
+4.1 Warehouse
+Field	Definition	Type	Length	Note
+storageId	Warehouse id	string	200	
+storageName	Warehouse Name	string	200	
+5 Transaction Fields
+5.1 Order
+Field	Definition	Type	Length	Note
+orderId	Order Id	string	200	
+orderWeight	order weight	int	200	
+orderAmount	order amount	double	200	unit: $ (USD)
+orderStatus	order status	string	200	
+Order Status
+
+Order Status	Status
+CREATED	Order create
+IN_CART	in cart
+UNPAID	unpaid
+UNSHIPPED	unshipped
+SHIPPED	shipped
+DELIVERED	delivered
+CANCELLED	cancelled
+5.2 Amount
+Field	Definition	Type	Length	Note
+noWithdrawalAmount	Bonus amount	BigDecimal	（18，2）	unit: $ (USD)
+freezeAmount	Frozen amount	BigDecimal	（18，2）	unit: $ (USD)
+amount	Amount	BigDecimal	（18，2）	unit: $ (USD）
+ps：
+
+1，BigDecimal（18，2） Length:20, 2 decimal digits.
+2，CJ Supported international currency: USD ($)
+5.3 Shipping
+Field	Definition	Type	Length	Note
+shippingCountryCode	shipping country code	string	200	
+shippingCountry	shipping country	string	200	
+shippingProvince	shipping province	string	200	
+shippingCity	shipping city	string	200	
+shippingAddress	shipping address	string	200	
+shippingZip	shipping zip	string	200	
+shippingPhone	shipping phone	string	200	
+6 Logistics Fields
+6.1 Logistics
+Field	Definition	Type	Length	Note
+logisticPrice	Shipping cost	BigDecimal	（18，2）	unit: $ (USD）
+logisticPriceCn	Shipping cost	BigDecimal	（18，2）	unit: ￥ (CNY)
+logisticAging	Estimated delivery timespan	string	20	
+logisticName	Shipping method	string	20	
+6.2 Tracking Number
+Field	Definition	Type	Length	Note
+trackingNumber	Tracking number	string	200	
+trackingFrom	From	string	20	
+trackingTo	To	string	20	
+deliveryDay	Delivery timespan	string	200	
+deliveryTime	Delivered time	string	200	
+trackingStatus	Tracking status	string	200	
+← Interface Definition 
+Access Frequency Restrictions
+Once you got the access token, your application can successfully call the various interfaces provided by the CJ backend to manage or access the resources of the CJ backend.
+
+In order to prevent application errors from causing an abnormal load on the CJ server, by default, each CJ user is limited to a certain rate of interface calls, and when this limit is exceeded, the corresponding interface call will receive a error code.
+
+The following is the current default frequency limit, which may be adjusted by the CJ backend depending on operational conditions.
+
+Base Frequency
+No more than 10 requests/second per IP address;
+The maximum call frequency for non-login interfaces is 30 requests/second.
+Specific interfaces have separate settings:
+/api2.0/v1/authentication/getAccessToken
+Once every 5 minutes
+/api2.0/v1/authentication/refreshAccessToken
+5 times per minute
+Special Frequency
+Special settings:
+
+The interface restricts user access frequency based on user level:
+For Free users or the sales level is 0 or 1, it is limited to 1 request/second;
+For Plus users or the sales level is 2, it is limited to 2 requests/second;
+For Prime users or the sales level is 3, it is limited to 4 requests/second;
+For Advanced users or the sales level is 4 or 5, it is limited to 6 requests/second.
+← Interface Field Definition
+Appendix 1：Global Error Codes
+Description
+Each time the interface is called, a code may be returned. Based on the return, you can debug the interface and troubleshoot errors.
+
+Notes.
+
+You are supposed to troubleshoot by codes instead of error messages as they may be adjusted.
+If the request parameters do not conform to the json specification, this may result in the CJ server parsing the parameters incompletely, in which the interface will return "Warning: wrong json format.". You need to check the request parameters of json.
+Error Code Description
+Return Code	Error Description	Troubleshooting
+200	Success	The request was successfully processed.
+1600000	System busy	The server is currently unavailable. Please try again later. No more than 3 times.
+1600001	No permission	CJ-Access-Token is invalid, View Help
+1600002	CJ-Access-Token not found	CJ-Access-Token not found, View Help
+1600003	Refresh token is failure	Refresh token is failure, View Help
+1600100	The interface has been taken offline	The interface is currently offline. Please contact the administrator.
+1600101	Interface not found	Interface path is error
+1600200	Call exceeded limit	View Help
+1600201	Quota has been used up	Quota has been used up，View Help
+1600300	Illegal parameter	View help
+1601000	User not found	User not found, email error
+1602000	Variant not found	Variant not found
+1602001	Product not found	Product not found, product is error, or product offline
+1603000	Order create fail	Order create fail, Please contact CJ admin
+1603001	Order confirm fail	Order confirm fail, Please contact CJ admin
+1603002	Order delete fail	Order delete fail, Please contact CJ admin
+1603100	Order not found, Please check the CJ order id	Order number is error
+1603101	Order pay fail, Please contact CJ Order Center	Order pay fail
+1604000	Balance is insufficient	Balance is insufficient
+1605000	Logistic not found	Logistic not found
+1606000	Webhook setting add fail, Webhook already have settings	
+1606001	Webhook set fail	Webhook set fail, Please contact CJ admin
+1607000	Webhook url error	Webhook url can not empty
+Troubleshooting methods
+Error code: 1600200
+Interface call exceeds limit.
+
+For specific frequency policy, refer to: Active call frequency limit
+The time is the same. For example, if you beyond the minutes limits, you can request again after minutes, while it will be hours if you beyond the hours limits.
+Our rate limit is not strict. For the calls, the following optimizations are considered.
+When the interface is implemented, only system failures need call again. For other error codes, the specific failure shall figured out.
+The call is reasonable or not. For a real-time synchronization, it can be changed to a timed task call as too many calls of one user will cause a bad experience.
+Error code: 1600300
+Invalid Parameter. It doesn't meet the system requirements. You can refer to the specific API interface instruction. Also, you need to confirm:
+
+It is a correct Http request method. For example, if the interface requires the Post method, you cannot use the Get method.
+It is a correct Http request parameter. For example, if the interface requires a json structure, it cannot be passed as an url parameter or form-data.
+← Interface Call Restrictions
+Appendix 2：Support Logistics
+Serial number	Chinese name	English name	Arrival time
+1	瑞邮宝PG	Wedenpost	7-20
+2	E邮宝	ePacket	7-20
+3	马电宝PG	Pos Malaysia	10-45
+4	马电宝十国PG	MYSG	10-45
+5	B邮宝挂号	Bpost	7-20
+6	易邮通PG	Singpost	7-20
+7	HK挂号	HKpost	7-20
+8	通达宝PG	Turkey Post	11-35
+9	通邮宝PG	Swiss Post	15-60
+10	欧电宝PG	PostNL	15-45
+11	官方E邮宝	ePacket+	5-15
+12	USPS美国专线	USPS	10-20
+13	法国专线	La Poste	4-12
+14	英国专线	Yodel	4-12
+15	德国专线	DHL Paket	4-12
+16	中国邮政小包挂号不带电	China Post Registered Air Mail	25-55
+17	无忧标准	AliExpress Standard Shipping	19-39
+18	无忧优先	Aliexpress Premium Shipping	7-15
+19	欧邮宝DS	BPost+	15-25
+20	USPS+渠道	USPS+	4-10
+21	DHL物流	DHL	3-7
+22	K邮宝	Korea Post	7-12
+23	顺邮宝PLUS	CJPacket Liquid	7-30
+24	德国专线挂号	YunExpress Germany Direct Line	5-10
+25	意大利专线挂号	YunExpress Italy Direct Line	5-10
+26	西班牙专线挂号	YunExpress Spain Direct Line	5-7
+27	奥地利专线	YunExpress Austria Direct Line	5-10
+28	云途中欧专线挂号	YunExpress Europe Direct Line	7-15
+29	中美专线（特惠）	CJPacket YT US	12-22
+30	加拿大专线	YunExpress Canada Direct Line	5-7
+31	荷比卢专线	YunExpress Netherlands Direct Line	5-10
+32	巴西专线	YunExpress Brazil Direct Line	10-20
+33	丹麦专线挂号	YunExpress Denmark Direct Line	7-15
+34	英国专线挂号特惠	YunExpress Britain Driect Economical Line	5-8
+35	法国专线挂号特惠	YunExpress France Direct Economical Line	5-12
+36	中澳专线	YunExpress Australia Direct Line	7-15
+37	顺邮宝专线	CJPacket Liquid Line	20-60
+38	顺友通	CJPacket Liquid Post	10-30
+39	印度专线	Grand Slam	7-9
+40	顺丰国际	S.F. Express	3-7
+41	燕文专线	YanWen	2-3
+42	顺丰国内	S.F China Domestic	2-3
+43	圆通国内	YTO China Domestic	2-3
+44	南非专线	South Africa Special Line	5-15
+45	巴西专线	Brazil special line	16-25
+46	壹电商美国专线	Liquid USPS	7-12
+47	巴林DHL	BH DHL	6-9
+48	纯电宝PG	Electric PostNL	10-30
+49	联邦小包	FedEx-SmartPost	10-15
+50	CJ物流	CJPacket	7-17
+51	DHL刀具专线	DHL+	3-7
+52	顺丰国际特惠	CJ Normal Express	8-18
+53	DHL官方	DHL Official	3-7
+54	DHL eCommerce	DHL eCommerce	2-7
+55	饰品专线	Jewel Shipping	5-15
+56	澳洲专线	CJPacket Australia	14-20
+57	饰品专线美国仓	Jewel Shipping+	3-6
+58	德国专线挂号特惠	YunExpress Germany Economic Line	7-12
+59	国际及台港澳特快邮件	China EMS	5-15
+60	欧邮宝A	Euro Post	15-25
+61	三态澳洲专线（特惠）	AUEXPIE	5-12
+62	三态加拿大专线	SFC Canada Express Line	6-12
+63	三态德国专线	DEEXP	6-12
+64	三态德国专线（特惠）	DEEXPLS	6-12
+65	三态墨西哥专线	MXEXP	7-10
+66	云途瑞典专线挂号	YunExpress Sweden Direct Line	7-10
+67	壹电商西班牙专线	Spain special line	4-10
+68	递四方DHL	DHL HongKong	3-5
+69	云途专线全球挂号	YTxpress-G	5-12
+70	壹电商韩国专线	Korea special line	4-6
+71	燕文专线追踪小包	Yanwen Special Line Tracking Pack	6-10
+72	饰品专线薄平	Jewel Shipping Flat	5-15
+73	深圳壹电商东莞EUB	DG Epacket	7-20
+74	三态巴西专线	SFC Brazil Line	15-20
+75	北京EUB化妆品渠道	BJ cosmetics epacket	7-20
+76	易联哥伦比亚专线	YL Columbia Line	10-15
+77	易联秘鲁专线	YL Peru Line	15-17
+78	Shopee 物流	CJ to Shopee Facility China	10-15
+79	Lazada 物流	CJ to Lazada Facility China	10-15
+80	CJCOD	CJCOD	10-15
+81	广州E特快	EMS Guangzhou	15-40
+82	快邮德国小包挂号	SFCQMDER	6-8
+83	CJPacket-Supplier	CJPacket-Supplier	3-5
+84	三态法国专线	SFC France Express Line	6-12
+85	嘉里空运	CJPacket JL Express	6-18
+86	燕文法国专线	CJ France Quick Line	5-10
+87	壹电商美国专线	CJ American Economic Line	10-18
+88	CJ泰国物流	CJPacket-Tha	2-3
+89	Shopee 物流泰国	CJ to Shopee Facility Thailand	2-3
+90	Lazada 物流泰国	CJ to Lazada Facility Thailand	2-3
+91	饰品专线薄平美国仓	Jewel Shipping Flat+	5-7
+92	深圳EUB特惠	Shenzhen  EUB	60
+93	燕邮宝	CJ Special Line	22-40
+94	CJ物流海运	CJPacket Sea	30-60
+95	苏州UPS	UPS	6-10
+96	德国邮政	Deutsche Post	3-6
+97	澳洲特快专线	CJPacket Australia Line	10-22
+98	燕文航空挂号小包(普货)	CJPacket YW Airline Ordinary	15-28
+99	德国DHL	DHL DE	1-2
+100	联邦小包	FedEx official	3-5
+101	易联速递	CJPacket MY Sensitive	14-30
+102	燕文中邮北京EUB	ePacket Beijing Cream	30-50
+103	易联海运	CJPacket-Sea Sensitive	10-20
+104	义乌EUB	ePacket Yiwu	12-50
+105	燕文普货	CJPacket YW Ordinary	10-18
+106	燕文特货	CJPacket YW Sensitive	12-18
+107	英国Yodel专线	CJPacket Sensitive GB	12-18
+108	美国UPS小包	CJPacket YDS US	10-22
+109	shopee 印尼物流	CJ to Shopee Facility Indonesia	2-3
+110	lazada 印尼物流	CJ to Lazada Facility Indonesia	2-3
+111	CJ空运	CJPacket Air	9-22
+112	CJ铁路	CJPacket Railway	22-35
+113	CJ卡派	CJPacket Land	10-25
+114	CJ欧洲物流	CJPacket Euro Ordinary	12-18
+115	顺友美国专线	CJPacket Liquid US	18-35
+116	CJ日本敏感货渠道	CJPacket Sensitive JP	15-20
+117	CJ欧洲带电渠道	CJPacket Euro Sensitive	12-20
+118	其他物流	Other	18-35
+119	顺友澳大利亚专线	CJPacket Liquid AU	15-28
+120	UBI利通智能	CJPacket Special line	12-25
+121	云途全球专线挂号（特惠带电）	CJPacket YT Euro	14-25
+122	泰国COD	CODCN	6-15
+123	壹电商加拿大专线敏感货	CJPacket Sensitive CA	12-18
+124	香港EMS免抛渠道	CJPacket Oversize	12-28
+125	CNE快速渠道	CJPacket Fast Line	7-12
+126	CJ物流普货	CJPacket Ordinary	8-12
+127	CJ物流敏感货	CJPacket Sensitive	10-15
+128	外仓服务商品Lazada	CJ Fulfillment Lazada Local	2-5
+129	外仓服务商品Shopee	CJ Fulfillment Shopee Local	2-5
+130	CJ长河专用	CJ Changhe	10-15
+131	顺丰美国	CJPacket SFE US	10-25
+132	易联速递线下	CJPacket  MY Sensitive	14-30
+← Appendix 1：Global Error Codes
+Appendix 3：Country Code
+Serial number	Chinese name	English name	The two-letter code	Triplet code	Numeric codes
+1	安道尔	Andorra	AD	AND	20
+2	阿联酋	United Arab Emirates(the)	AE	ARE	784
+3	阿富汗	Afghanistan	AF	AFG	4
+4	安提瓜和巴布达	Antigua and Barbuda	AG	ATG	28
+5	安圭拉	Anguilla	AI	AIA	660
+6	阿尔巴尼亚	Albania	AL	ALB	8
+7	亚美尼亚	Armenia	AM	ARM	51
+8	安哥拉	Angola	AO	AGO	24
+9	南极洲	Antarctica	AQ	ATA	10
+10	阿根廷	Argentina	AR	ARG	32
+11	美属萨摩亚	American Samoa	AS	ASM	16
+12	奥地利	Austria	AT	AUT	40
+13	澳大利亚	Australia	AU	AUS	36
+14	阿鲁巴	Aruba	AW	ABW	533
+15	奥兰群岛	Åland Islands	AX	ALA	248
+16	阿塞拜疆	Azerbaijan	AZ	AZE	31
+17	波黑	Bosnia and Herzegovina	BA	BIH	70
+18	巴巴多斯	Barbados	BB	BRB	52
+19	孟加拉	Bangladesh	BD	BGD	50
+20	比利时	Belgium	BE	BEL	56
+21	布基纳法索	Burkina Faso	BF	BFA	854
+22	保加利亚	Bulgaria	BG	BGR	100
+23	巴林	Bahrain	BH	BHR	48
+24	布隆迪	Burundi	BI	BDI	108
+25	贝宁	Benin	BJ	BEN	204
+26	圣巴泰勒米岛	Saint Barthélemy	BL	BLM	652
+27	百慕大	Bermuda	BM	BMU	60
+28	文莱	Brunei Darussalam	BN	BRN	96
+29	玻利维亚	Bolivia (Plurinational State of)	BO	BOL	68
+30	荷兰加勒比区	Bonaire, Sint Eustatius and Saba	BQ	BES	535
+31	巴西	Brazil	BR	BRA	76
+32	巴哈马	Bahamas(the)	BS	BHS	44
+33	不丹	Bhutan	BT	BTN	64
+34	布韦岛	Bouvet Island	BV	BVT	74
+35	博茨瓦纳	Botswana	BW	BWA	72
+36	白俄罗斯	Belarus	BY	BLR	112
+37	伯利兹	Belize	BZ	BLZ	84
+38	加拿大	Canada	CA	CAN	124
+39	科科斯群岛	Cocos (Keeling) Islands(the)	CC	CCK	166
+40	刚果（金）	Congo (the Democratic Republic of OD	180		
+41	中非	Central African Republic (the)	CF	CAF	140
+42	刚果（布）	Congo (the)	CG	COG	178
+43	瑞士	Switzerland	CH	CHE	756
+44	科特迪瓦	Côte d'Ivoire	CI	CIV	384
+45	库克群岛	Cook Islands (the)	CK	COK	184
+46	智利	Chile	CL	CHL	152
+47	喀麦隆	Cameroon	CM	CMR	120
+48	中国	China	CN	CHN	156
+49	哥伦比亚	Colombia	CO	COL	170
+50	哥斯达黎加	Costa Rica	CR	CRI	188
+51	古巴	Cuba	CU	CUB	192
+52	佛得角	Cabo Verde	CV	CPV	132
+53	库拉索	Curaçao	CW	CUW	531
+54	圣诞岛	Christmas Island	CX	CXR	162
+55	塞浦路斯	Cyprus	CY	CYP	196
+56	捷克	Czechia	CZ	CZE	203
+57	德国	Germany	DE	DEU	276
+58	吉布提	Djibouti	DJ	DJI	262
+59	丹麦	Denmark	DK	DNK	208
+60	多米尼克	Dominica	DM	DMA	212
+61	多米尼加	Dominican Republic (the)	DO	DOM	214
+62	阿尔及利亚	Algeria	DZ	DZA	12
+63	厄瓜多尔	Ecuador	EC	ECU	218
+64	爱沙尼亚	Estonia	EE	EST	233
+65	埃及	Egypt	EG	EGY	818
+66	西撒哈拉	Western Sahara*	EH	ESH	732
+67	厄立特里亚	Eritrea	ER	ERI	232
+68	西班牙	Spain	ES	ESP	724
+69	埃塞俄比亚	Ethiopia	ET	ETH	231
+70	芬兰	Finland	FI	FIN	246
+71	斐济群岛	Fiji	FJ	FJI	242
+72	马尔维纳斯群岛（福克兰）	Falkland Islands (the) [Malvinas]	FK	FLK	238
+73	密克罗尼西亚联邦	Micronesia (Federated States of)	FM	FSM	583
+74	法罗群岛	Faroe Islands (the)	FO	FRO	234
+75	法国	France	FR	FRA	250
+76	加蓬	Gabon	GA	GAB	266
+77	英国	United Kingdom of Great Britain and Northern Irela	GB	GBR	826
+78	格林纳达	Grenada	GD	GRD	308
+79	格鲁吉亚	Georgia	GE	GEO	268
+80	法属圭亚那	French Guiana	GF	GUF	254
+81	根西岛	Guernsey	GG	GGY	831
+82	加纳	Ghana	GH	GHA	288
+83	直布罗陀	Gibraltar	GI	GIB	292
+84	格陵兰	Greenland	GL	GRL	304
+85	冈比亚	Gambia (the)	GM	GMB	270
+86	几内亚	Guinea	GN	GIN	324
+87	瓜德罗普	Guadeloupe	GP	GLP	312
+88	赤道几内亚	Equatorial Guinea	GQ	GNQ	226
+89	希腊	Greece	GR	GRC	300
+90	南乔治亚岛和南桑威奇群岛	South Georgia and the South Sandwich Islands	GS	SGS	239
+91	危地马拉	Guatemala	GT	GTM	320
+92	关岛	Guam	GU	GUM	316
+93	几内亚比绍	Guinea-Bissau	GW	GNB	624
+94	圭亚那	Guyana	GY	GUY	328
+95	香港	Hong Kong	HK	HKG	344
+96	赫德岛和麦克唐纳群岛	Heard Island and McDonald Islands	HM	HMD	334
+97	洪都拉斯	Honduras	HN	HND	340
+98	克罗地亚	Croatia	HR	HRV	191
+99	海地	Haiti	HT	HTI	332
+100	匈牙利	Hungary	HU	HUN	348
+101	印尼	Indonesia	ID	IDN	360
+102	爱尔兰	Ireland	IE	IRL	372
+103	以色列	Israel	IL	ISR	376
+104	马恩岛	Isle of Man	IM	IMN	833
+105	印度	India	IN	IND	356
+106	英属印度洋领地	British Indian Ocean Territory (the)	IO	IOT	86
+107	伊拉克	Iraq	IQ	IRQ	368
+108	伊朗	Iran (Islamic Republic of)	IR	IRN	364
+109	冰岛	Iceland	IS	ISL	352
+110	意大利	Italy	IT	ITA	380
+111	泽西岛	Jersey	JE	JEY	832
+112	牙买加	Jamaica	JM	JAM	388
+113	约旦	Jordan	JO	JOR	400
+114	日本	Japan	JP	JPN	392
+115	肯尼亚	Kenya	KE	KEN	404
+116	吉尔吉斯斯坦	Kyrgyzstan	KG	KGZ	417
+117	柬埔寨	Cambodia	KH	KHM	116
+118	基里巴斯	Kiribati	KI	KIR	296
+119	科摩罗	Comoros (the)	KM	COM	174
+120	圣基茨和尼维斯	Saint Kitts and Nevis	KN	KNA	659
+121	朝鲜	Korea (the Democratic People's Republic of)	KP	PRK	408
+122	韩国	Korea (the Republic of)	KR	KOR	410
+123	科威特	Kuwait	KW	KWT	414
+124	开曼群岛	Cayman Islands (the)	KY	CYM	136
+125	哈萨克斯坦	Kazakhstan	KZ	KAZ	398
+126	老挝	Lao People's Democratic Republic (the)	LA	LAO	418
+127	黎巴嫩	Lebanon	LB	LBN	422
+128	圣卢西亚	Saint Lucia	LC	LCA	662
+129	列支敦士登	Liechtenstein	LI	LIE	438
+130	斯里兰卡	Sri Lanka	LK	LKA	144
+131	利比里亚	Liberia	LR	LBR	430
+132	莱索托	Lesotho	LS	LSO	426
+133	立陶宛	Lithuania	LT	LTU	440
+134	卢森堡	Luxembourg	LU	LUX	442
+135	拉脱维亚	Latvia	LV	LVA	428
+136	利比亚	Libya	LY	LBY	434
+137	摩洛哥	Morocco	MA	MAR	504
+138	摩纳哥	Monaco	MC	MCO	492
+139	摩尔多瓦	Moldova (the Republic of)	MD	MDA	498
+140	黑山	Montenegro	ME	MNE	499
+141	法属圣马丁	Saint Martin (French part)	MF	MAF	663
+142	马达加斯加	Madagascar	MG	MDG	450
+143	马绍尔群岛	Marshall Islands (the)	MH	MHL	584
+144	马其顿	Macedonia (the former Yugoslav Republic of)	MK	MKD	807
+145	马里	Mali	ML	MLI	466
+146	缅甸	Myanmar	MM	MMR	104
+147	蒙古国	Mongolia	MN	MNG	496
+148	澳门	Macao	MO	MAC	446
+149	北马里亚纳群岛	Northern Mariana Islands (the)	MP	MNP	580
+150	马提尼克	Martinique	MQ	MTQ	474
+151	毛里塔尼亚	Mauritania	MR	MRT	478
+152	蒙塞拉特岛	Montserrat	MS	MSR	500
+153	马耳他	Malta	MT	MLT	470
+154	毛里求斯	Mauritius	MU	MUS	480
+155	马尔代夫	Maldives	MV	MDV	462
+156	马拉维	Malawi	MW	MWI	454
+157	墨西哥	Mexico	MX	MEX	484
+158	马来西亚	Malaysia	MY	MYS	458
+159	莫桑比克	Mozambique	MZ	MOZ	508
+160	纳米比亚	Namibia	NA	NAM	516
+161	新喀里多尼亚	New Caledonia	NC	NCL	540
+162	尼日尔	Niger (the)	NE	NER	562
+163	诺福克岛	Norfolk Island	NF	NFK	574
+164	尼日利亚	Nigeria	NG	NGA	566
+165	尼加拉瓜	Nicaragua	NI	NIC	558
+166	荷兰	Netherlands (the)	NL	NLD	528
+167	挪威	Norway	NO	NOR	578
+168	尼泊尔	Nepal	NP	NPL	524
+169	瑙鲁	Nauru	NR	NRU	520
+170	纽埃	Niue	NU	NIU	570
+171	新西兰	New Zealand	NZ	NZL	554
+172	阿曼	Oman	OM	OMN	512
+173	巴拿马	Panama	PA	PAN	591
+174	秘鲁	Peru	PE	PER	604
+175	法属波利尼西亚	French Polynesia	PF	PYF	258
+176	巴布亚新几内亚	Papua New Guinea	PG	PNG	598
+177	菲律宾	Philippines (the)	PH	PHL	608
+178	巴基斯坦	Pakistan	PK	PAK	586
+179	波兰	Poland	PL	POL	616
+180	圣皮埃尔和密克隆	Saint Pierre and Miquelon	PM	SPM	666
+181	皮特凯恩群岛	Pitcairn	PN	PCN	612
+182	波多黎各	Puerto Rico	PR	PRI	630
+183	巴勒斯坦	Palestine, State of	PS	PSE	275
+184	葡萄牙	Portugal	PT	PRT	620
+185	帕劳	Palau	PW	PLW	585
+186	巴拉圭	Paraguay	PY	PRY	600
+187	卡塔尔	Qatar	QA	QAT	634
+188	留尼汪	Réunion	RE	REU	638
+189	罗马尼亚	Romania	RO	ROU	642
+190	塞尔维亚	Serbia	RS	SRB	688
+191	俄罗斯	Russian Federation (the)	RU	RUS	643
+192	卢旺达	Rwanda	RW	RWA	646
+193	沙特阿拉伯	Saudi Arabia	SA	SAU	682
+194	所罗门群岛	Solomon Islands	SB	SLB	90
+195	塞舌尔	Seychelles	SC	SYC	690
+196	苏丹	Sudan (the)	SD	SDN	729
+197	瑞典	Sweden	SE	SWE	752
+198	新加坡	Singapore	SG	SGP	702
+199	圣赫勒拿	Saint Helena, Ascension and Tristan da Cunha	SH	SHN	654
+200	斯洛文尼亚	Slovenia	SI	SVN	705
+201	斯瓦尔巴群岛和扬马延岛	Svalbard and Jan Mayen	SJ	SJM	744
+202	斯洛伐克	Slovakia	SK	SVK	703
+203	塞拉利昂	Sierra Leone	SL	SLE	694
+204	圣马力诺	San Marino	SM	SMR	674
+205	塞内加尔	Senegal	SN	SEN	686
+206	索马里	Somalia	SO	SOM	706
+207	苏里南	Suriname	SR	SUR	740
+208	南苏丹	South Sudan	SS	SSD	728
+209	圣多美和普林西比	Sao Tome and Principe	ST	STP	678
+210	萨尔瓦多	El Salvador	SV	SLV	222
+211	圣马丁岛	Sint Maarten (Dutch part)	SX	SXM	534
+212	叙利亚	Syrian Arab Republic	SY	SYR	760
+213	斯威士兰	Swaziland	SZ	SWZ	748
+214	特克斯和凯科斯群岛	Turks and Caicos Islands (the)	TC	TCA	796
+215	乍得	Chad	TD	TCD	148
+216	法属南部领地	French Southern Territories (the)	TF	ATF	260
+217	多哥	Togo	TG	TGO	768
+218	泰国	Thailand	TH	THA	764
+219	塔吉克斯坦	Tajikistan	TJ	TJK	762
+220	托克劳	Tokelau	TK	TKL	772
+221	东帝汶	Timor-Leste	TL	TLS	626
+222	土库曼斯坦	Turkmenistan	TM	TKM	795
+223	突尼斯	Tunisia	TN	TUN	788
+224	汤加	Tonga	TO	TON	776
+225	土耳其	Turkey	TR	TUR	792
+226	特立尼达和多巴哥	Trinidad and Tobago	TT	TTO	780
+227	图瓦卢	Tuvalu	TV	TUV	798
+228	台湾	Taiwan (Province of China)	TW	TWN	158
+229	坦桑尼亚	Tanzania, United Republic of	TZ	TZA	834
+230	乌克兰	Ukraine	UA	UKR	804
+231	乌干达	Uganda	UG	UGA	800
+232	美国本土外小岛屿	United States Minor Outlying Islands (the)	UM	UMI	581
+233	美国	United States of America (the)	US	USA	840
+234	乌拉圭	Uruguay	UY	URY	858
+235	乌兹别克斯坦	Uzbekistan	UZ	UZB	860
+236	梵蒂冈	Holy See (the)	VA	VAT	336
+237	圣文森特和格林纳丁斯	Saint Vincent and the Grenadines	VC	VCT	670
+238	委内瑞拉	Venezuela (Bolivarian Republic of)	VE	VEN	862
+239	英属维尔京群岛	Virgin Islands (British)	VG	VGB	92
+240	美属维尔京群岛	Virgin Islands (U.S.)	VI	VIR	850
+241	越南	Viet Nam	VN	VNM	704
+242	瓦努阿图	Vanuatu	VU	VUT	548
+243	瓦利斯和富图纳	Wallis and Futuna	WF	WLF	876
+244	萨摩亚	Samoa	WS	WSM	882
+245	也门	Yemen	YE	YEM	887
+246	科索沃共和国	The Republic of Kosovo	YK		
+247	马约特	Mayotte	YT	MYT	175
+248	南非	South Africa	ZA	ZAF	710
+249	赞比亚	Zambia	ZM	ZMB	894
+250	津巴布韦	Zimbabwe	ZW	ZWE	716
+← Appendix 2：Support Logistics
+1 Authentication
+1 Authentication
+1.1 Get access token（POST）
+Token-based authentication, the life of an access token is 15 days, and the life of a refresh token is 180 days. You can request new access tokens with refresh token when access token expires. You need to log in when refresh token expires.
+
+Can only be called once every 5 minutes
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/authentication/getAccessToken
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/authentication/getAccessToken' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "email": "v0pjsw5t@linshiyouxiang.net",
+                    "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }'
+Parameter	Definition	Type	Required	Length	Note
+email	Email used when registering account in CJ	string	yes	200	View your mailbox (opens new window), Required: You have a CJ account
+password	Key of the CJ API	string	yes	200	Get API Key (opens new window), Required: You have a CJ account
+How to get Api Key:
+
+Go to Get API Key (opens new window)and click button "Generate"
+
+How to get Api Key
+
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "accessToken": "f59ac98193d64d62a9e887abea830369",
+        "accessTokenExpiryDate": "2021-08-18T09:16:33+08:00",
+        "refreshToken": "f7edabe65c3b4a198b50ca8f969e36eb",
+        "refreshTokenExpiryDate": "2022-02-07T09:16:33+08:00",
+        "createDate": "2021-08-11T09:16:33+08:00"
+    },
+    "requestId": "8b3d9ea1-00c3-4d10-9e2b-d18041d98080"
+}
+Field	Definition	Type	Length	Note
+accessToken	access token	string	200	
+accessTokenExpiryDate	access token expiry time	string	200	Default 7 days
+refreshToken	Refresh Token	string	200	
+refreshTokenExpiryDate	Refresh Token expiry time	string	200	Default 180 days
+createDate	Created date	string	200	
+error
+
+{
+    "code": 1601000,
+    "result": false,
+    "message": "User not find",
+    "data": null,
+    "requestId": "a18c9793-7c99-42f9-970b-790eecdceba2"
+}
+Field	Definition	Type	Length	Note
+code	Error code	int	20	Return to error codes
+result	Whether returned	boolean	1	
+message	Return message	string	200	
+data				Data return
+requestId	Request ID	string	48	For error inquiry
+1.2 Refresh access token（POST）
+An API security mechanism with which the expiry date of access token can be refreshed. The life of an access token is 15 days.
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/authentication/refreshAccessToken
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/authentication/refreshAccessToken' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "refreshToken": "3d3b01404da04be8b6795d7e9823cee5"
+                }'
+Parameter	Definition	Type	Required	Length	Note
+refreshToken	Refresh Token	string	yes	80	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "accessToken": "f59ac98193d64d62a9e887abea830369",
+        "accessTokenExpiryDate": "2021-08-18T09:16:33+08:00",
+        "refreshToken": "f7edabe65c3b4a198b50ca8f969e36eb",
+        "refreshTokenExpiryDate": "2022-02-07T09:16:33+08:00",
+        "createDate": "2021-08-11T09:16:33+08:00"
+    },
+    "requestId": "8b3d9ea1-00c3-4d10-9e2b-d18041d98080"
+}
+Field	Definition	Type	Length	Note
+accessToken	access token	string	200	
+accessTokenExpiryDate	access token Expiry Time	string	200	Default 15 days
+refreshToken	Refresh Token	string	200	
+refreshTokenExpiryDate	Refresh Token Expiry Time	string	200	Default 180 days
+createDate	Created Date	string	200	
+error
+
+{
+    "code": 1600003,
+    "result": false,
+    "message": "Refresh token is failure",
+    "data": null,
+    "requestId": "0b20dc1a-0043-43a7-a7c0-51ca6c61d976"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.3 Logout Token（POST）
+API security mechanism. After logging out, access token and refresh token will expire.
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/authentication/logout
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/authentication/logout' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": true,
+    "requestId": "b1d3728d-8a29-417e-9983-6df9926aaa49"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+error
+
+{
+    "code": 1600001,
+    "result": false,
+    "message": "Authentication failed",
+    "data": null,
+    "requestId": "5aa2bb6e-42fa-4e0a-ae88-1833c2c1c883"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← Appendix 3：Country Code
+2 Settings
+1 Settings
+1.1 Get Settings（GET）
+Account settings include profile, API quota limits, general API QPS limits, sandbox account, etc.
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/setting/get
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/setting/get' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "openId": 1,
+        "openName": "121 2322",
+        "openEmail": "v0pjsw5t@linshiyouxiang.net",
+        "setting": {
+            "quotaLimits": [
+                {
+                    "quotaUrl": "/api2.0/v1/setting/account/get",
+                    "quotaLimit": 74,
+                    "quotaType": 0
+                }
+            ],
+            "qpsLimit": 100
+        },
+        "callback": {
+            "productType": ALL,
+            "productCallbackUrls": [
+                "http://localhsost:8080/api2.0/"
+            ]
+        },
+        "root": "GENERAL",
+        "isSandbox": false
+    },
+    "requestId": "ea5896b0-273d-4b49-8c54-ad8f025a49b8"
+}
+Field	Definition	Type	Length	Note
+openId	Account ID	string	200	
+openName	Account name	string	200	
+openEmail	Account Email	string	200	
+setting	Settings	list	200	
+quotaLimits	Quota limits	list		Applicable on specific URLs
+quotaUrl	Quota URL	string	200	
+quotaLimit	Quota limit	int	20	
+quotaType	Quota Type	byte	4	0-total，1-per year，2-per year，3-per quarter，4-per day，5-per hour
+qpsLimit	QPS limit	int	20	account Queries per second
+root	Root access	string	200	root：NO_PERMISSION - not authorized
+GENERAL - general account
+VIP - VIP account
+ADMIN - administrator
+isSandbox	(Whether) Sandbox account	byte	4	
+error
+
+{
+    "code": 1601000,
+    "result": false,
+    "message": "User not find",
+    "data": null,
+    "requestId": "a18c9793-7c99-42f9-970b-790eecdceba2"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← 1 Authentication
+3 Product
+1 Products
+1.1 Category List(GET)
+Get all category products from CJ.
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/getCategory
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/getCategory' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "categoryFirstName": "Computer & Office",
+            "categoryFirstList": [
+                {
+                    "categorySecondName": "Office Electronics",
+                    "categorySecondList": [
+                        {
+                            "categoryId": "2252588B-72E3-4397-8C92-7D9967161084",
+                            "categoryName": "Office & School Supplies"
+                        },
+                    ]...
+                }
+            ]    
+        }
+    ],
+    "requestId": "ae543fd1-cdd7-4a61-974a-1340fea678c6"
+}
+Field	Definition	Type	Length	Note
+categoryFirstName	First level catalog name	string	200	
+categoryFirstList	First level catalog list	string	200	
+categorySecondName	Second level catalog name	string	200	
+categorySecondList	Second level catalog name	string	200	
+categoryId	Third level catalog name	string	200	
+categoryName	Third level catalog name	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.2 Product List(GET)
+Get all available products from CJ, criteria inquiry supported. 20 results for each page, fixed.
+
+Note:
+
+Maximum return of 200 data per page.
+Free users or v1 users are limited to a maximum of 1000 requests per day.(2024-09-30 update)
+One IP is limited to a maximum of three users.(2024-09-30 update)
+Query the product list and add "deliveryTime" field (hours). The values are 24, 48, 72, or null (2024-11-15 update)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/list
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/list' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+pageNum	Page number	int	No	20	Default 1
+pageSize	Quantity of results on each page	int	No	20	Default 20
+categoryId	category id	string	No	200	Inquiry criteria
+pid	Product id	string	No	200	Inquiry criteria
+productSku	Product sku	string	No	200	Inquiry criteria
+productName	Product name	string	No	200	Inquiry criteria
+productNameEn	Product name(en)	string	No	200	Inquiry criteria
+productType	Product type	string	No	200	values: ORDINARY_PRODUCT SUPPLIER_PRODUCT
+countryCode	countryCode	string	No	200	eg: CN, US
+deliveryTime	Delivery Time (hours)	string	No	200	available values: 24,48,72 (Expected to ship within 24 hours,48 hours,72 hours)
+verifiedWarehouse	Verified Inventory Type	number	否	1	Verified Inventory Type，1=Verified,2=unverified, Not passing values means not restricting queries based on that type
+startInventory	the minimum inventory	number	No		eg: 2
+endInventory	the highest inventory	number	No		eg: 10
+createTimeFrom	create time(start)	string	No	200	format: yyyy-MM-dd hh:mm:ss
+createTimeTo	create time(end)	string	No	200	format: yyyy-MM-dd hh:mm:ss
+brandOpenId	brand id	long	No	200	Inquiry criteria
+minPrice	minimum price	number	No	200	eg: 1.0
+maxPrice	maximum price	number	No	200	eg: 2.5
+searchType	Search Type	number	No	5	Search type: 0=All products, 2=Trending Products, 21=Trending Products View More, default is 0
+minListedNum	Minimum Listed Num	number	No	10	eg: 1
+maxListedNum	Maximum Listed Num	number	No	10	eg: 10
+sort	Sort Type	string	No	4	Sort Type, ignoring case: desc/asc, default: desc
+orderBy	Sort field	string	No	20	Sort field, ignoring case: createAt/listedNum, default: createAt
+isSelfPickup	Does the product support self pickup	number	No	1	1=supported, 0 or others are not supported
+Return
+success
+
+{
+     "code": 200,
+     "result": true,
+     "message": "Success",
+     "data": {
+         "pageNum": 1,
+         "pageSize": 20,
+         "total": 1,
+         "list": [
+             {
+                 "pid": "04A22450-67F0-4617-A132-E7AE7F8963B0",
+                 "productName": "[\"猫耳朵卫衣\",\"定制卫衣\",\"个性化定制\"]",
+                 "productNameEn": "Personalized Belly-baring Cat Ear Hoody Coat",
+                 "productSku": "CJNSSYWY01847",
+                 "productImage": "https://cc-west-usa.oss-us-west-1.aliyuncs.com/20210129/2167381084610.png",
+                 "productWeight": 0,
+                 "productType": null,
+                 "productUnit": "unit(s)",
+                 "sellPrice": 11.85,
+                 "categoryId": "5E656DFB-9BAE-44DD-A755-40AFA2E0E686",
+                 "categoryName": "Women's Clothing / Tops & Sets / Hoodies & Sweatshirts",
+                 "sourceFrom": 0,
+                 "remark": "",
+                 "createTime": null
+             }
+         ]
+     },
+     "requestId": "f95cd31d-3907-47ce-ac1a-dfdee4315960"
+}
+Field	Definition	Type	Length	Note
+pageNum	Page number	int	20	
+pageSize	Quantity of results on each page	int	20	
+total	Total quantity of results	int	20	
+list		List		
+pid	Product ID	string	200	
+productName	Product name	list	20	
+productNameEn	Product name(EN)	string	200	
+productSku	Product sku	string	200	
+productImage	Product image	string	200	
+productWeight	Product weight	int	200	Unit: g
+productType	Product type	byte	200	
+productUnit	Product unit	string	48	
+categoryId	Category id	string	200	
+categoryName	Category name	string	200	
+addMarkStatus	(Whether) the package mailed	boolean	1	
+listingCount	listing count	int	200	
+sellPrice	sell price	string	200	
+createTime	create time	date		
+isVideo	Is there a video	long	2	
+saleStatus	sale status	int	20	
+listedNum	listed number	int	20	
+supplierName	supplier name	string	200	
+supplierId	supplier id	string	200	
+sourceFrom	source	string	200	
+Product Type
+
+Product Type	Description
+ORDINARY_PRODUCT	Ordinary product， managed by CJ for inventory management
+SERVICE_PRODUCT	Service product, If you need to transfer your own goods to CJ warehouse and CJ provides warehousing services, we will mark it as a service item;
+PACKAGING_PRODUCT	Packaging product are used for packaging when shipped from the warehouse. They do not support separate shipping and need to be shipped together with other goods;
+SUPPLIER_PRODUCT	Supplier product, It is a merchant that collaborates with CJ to manage inventory of goods
+SUPPLIER_SHIPPED_PRODUCT	shipped by supplier management
+Product Status
+
+ProductStatus	Description
+0	Deleted
+1	To be submitted
+2	Pending
+3	On sale
+4	Audit failure
+5	Off sale
+6	To be reviewed
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.3 Product Details(GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/query
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/query?pid=000B9312-456A-4D31-94BD-B083E2A198E8' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+pid	Product id	string	Choose one of two	200	Inquiry criteria
+productSku	Product sku	string	Choose one of two	200	Inquiry criteria
+variantSku	variant sku	string	Choose one of two	200	Inquiry criteria
+features	features	List	No	200	support: enable_combine
+countryCode	Country Code	string	No	2	If the parameter has a value, only variants with inventory in that country will be returned. If no value is passed, inventory will not be restricted
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "pid": "000B9312-456A-4D31-94BD-B083E2A198E8",
+        "productName": "[\"攀爬车 拖斗车 \",\"攀爬车 \",\"拖斗车 \"]",
+        "productNameEn": "Small trailer model",
+        "productSku": "CJJJJTJT05843",
+        "productImage": "https://cc-west-usa.oss-us-west-1.aliyuncs.com/2054/1672872416690.jpg",
+        "productWeight": "1500.0",
+        "productUnit": "unit(s)",
+        "productType": "ORDINARY_PRODUCT",
+        "categoryId": "87CF251F-8D11-4DE0-A154-9694D9858EB3",
+        "categoryName": "Home & Garden, Furniture / Home Storage / Home Office Storage",
+        "entryCode": "8712008900",
+        "entryName": "模型",
+        "entryNameEn": "model",
+        "materialName": "[\"\",\"金属\"]",
+        "materialNameEn": "[\"\",\"metal\"]",
+        "materialKey": "[\"METAL\"]",
+        "packingWeight": "1580.0",
+        "packingName": "[\"\",\"塑料袋\"]",
+        "packingNameEn": "[\"\",\"plastic_bag\"]",
+        "packingKey": "[\"PLASTIC_BAG\"]",
+        "productKey": "[\"颜色\"]",
+        "productKeyEn": "Color",
+        "sellPrice": 58.09,
+        "sourceFrom": 1,
+        "description": "....",
+        "suggestSellPrice": "0.97-4.08",
+        "listedNum": 392,
+        "status": "3",
+        "supplierName": "",
+        "supplierId": "",
+        "variants": [
+            {
+                "vid": "D4057F56-3F09-4541-8461-9D76D014846D",
+                "pid": "000B9312-456A-4D31-94BD-B083E2A198E8",
+                "variantName": null,
+                "variantNameEn": "Small trailer model Black",
+                "variantSku": "CJJJJTJT05843-Black",
+                "variantUnit": null,
+                "variantProperty": null,
+                "variantKey": "Black",
+                "variantLength": 300,
+                "variantWidth": 200,
+                "variantHeight": 100,
+                "variantVolume": 6000000,
+                "variantWeight": 1580.00,
+                "variantSellPrice": 58.09,
+                "createTime": "2019-12-31T11:14:12.000+00:00"
+                "variantStandard": "long=110,width=110,height=30",
+                "variantSugSellPrice": 0.97
+                "combineVariants":[{}]
+            }...
+        ],
+        "createrTime": "2019-12-24T01:06:37+08:00"
+    },
+    "requestId": "d8dc0b6d-0ed8-4e19-8f63-3f207ac39832"
+}
+product
+
+Field	Definition	Type	Length	Note
+pid	Product ID	string	200	
+productName	Product name	list	20	
+productNameEn	Product name(EN)	string	200	
+productSku	Product sku	string	200	
+productImage	Product image	string	200	
+productWeight	Product weight	int	200	Unit: g
+productType	Product type	byte	200	
+productUnit	Product unit	string	48	
+categoryId	Category id	string	200	
+categoryName	Category name	string	200	
+entryCode	HS code	string	200	
+entryName	Customs name	string	200	
+entryNameEn	Customs name (EN)	string	200	
+materialName	Material	string	200	
+materialNameEn	Material (EN)	string	200	
+materialKey	Material attribute	string	200	
+packWeight	Package weight	int	200	Unit: g
+packingName	Package name	string	200	
+packingNameEn	Package name (EN)	string	200	
+packingKey	Package attribute	string	200	
+productKey	Product attribute	string	200	
+productKeyEn	Product attribute (EN)	string	200	
+addMarkStatus	(Whether) the package mailed	boolean	1	
+description	Description	string	200	
+sellPrice	sell price	string	200	
+sourceFrom	source	string	20	
+createrTime	creater time	string	20	
+sellPrice	sell price	string	200	
+productVideo	product video	string	200	
+status	status	string	20	
+suggestSellPrice	suggest sell price	string	20	
+listedNum	listed number	int	20	
+supplierName	supplier name	string	20	
+supplierId	supplier Id	string	20	
+variants	Variants	List		
+variant
+
+Field	Definition	Type	Length	Note
+vid	Variant Id	string	200	
+pid	Product Id	string	20	
+variantName	Variant Name	string	200	
+variantNameEn	Variant Name(en)	string	200	
+variantSku	Variant SKU	string	200	
+variantImage	Variant Image	string	200	
+variantStandard	Variant Standard	string	200	
+variantUnit	Variant Unit	string	200	
+variantProperty	Variant Property	string	200	
+variantKey	Variant Key	string	200	
+variantLength	Variant Length	int	200	Unit: mm
+variantWidth	Variant Width	int	200	Unit: mm
+variantHeight	Variant Height	int	200	Unit: mm
+variantVolume	Variant Volume	int	200	Unit: mm3
+variantWeight	Variant Weight	double	200	Unit: g
+variantSellPrice	Variant SellPrice	double	200	unit: $ (USD)
+variantSugSellPrice	Variant Suggest SellPrice	double	200	unit: $ (USD)
+createTime	Vreater Time	string	200	
+combineNum	number of Combine Variants	int		
+combineVariants	Combine Variants	List	200	
+Product Type
+
+Product Type	Description
+ORDINARY_PRODUCT	Ordinary product
+SERVICE_PRODUCT	Service product
+PACKAGING_PRODUCT	Packaging product
+SUPPLIER_PRODUCT	Supplier product
+SUPPLIER_SHIPPED_PRODUCT	Supplier shipped product
+Product Status
+
+product status	remark
+0	Deleted
+1	To be submitted
+2	Pending
+3	On sale
+4	Audit failure
+5	Off sale
+6	To be reviewed
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.4 Add to My Product (POST)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/addToMyProduct
+
+CURL
+curl --location 'http://localhost:8081/api2.0/v1/product/addToMyProduct' \
+--header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+--header 'Content-Type: application/json' \
+--data '{
+    "productId": "1658748072937136128"
+}'
+Parameter	Definition	Type	Required	Length	Note
+productId	cj product id	string	Yes	100	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": true,
+    "requestId": "a7d4d01b1eed4db9ac2cc1ab7903c98c",
+    "success": true
+}
+error
+
+{
+    "code": 1600000,
+    "result": false,
+    "message": "The product has been added to My Products.",
+    "data": null,
+    "requestId": "b626475ff68242c3abfea562f9d4f899",
+    "success": false
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.3 My Product List(GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/myProduct/query
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/myProduct/query?keyword=CJWJWJYZ02543' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+keyword	sku/spu/product name	string	No	200	
+categoryId	category id	string	No	200	
+startAt	start time	string	No	200	
+endAt	ent time	string	No	200	
+isListed	isListed	int	No	200	
+visiable	visiable	int	No	200	
+hasPacked	hasPacked	int	No	200	
+hasVirPacked	hasVirPacked	int	No	200	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "pageSize": 10,
+        "pageNumber": 1,
+        "totalRecords": 536,
+        "totalPages": 54,
+        "content": [
+            {
+                "productId": "01118E21-A8B9-45CE-A16C-75232FB8A14A",
+                "packWeight": "530.0",
+                "weight": "480.0",
+                "productType": "0",
+                "propertyKeyList": [
+                    "COMMON"
+                ],
+                "bigImage": "https://cf.cjdropshipping.com/15926688/9714688036284.jpg",
+                "nameEn": "3D wooden three-dimensional puzzle",
+                "sku": "CJWJWJJM00719",
+                "hasPacked": 0,
+                "sellPrice": "2.4",
+                "discountPrice": null,
+                "discountPriceRate": null,
+                "defaultArea": "China Warehouse",
+                "shopMethod": "CAI NIAO",
+                "trialFreight": "0",
+                "totalPrice": "2.40",
+                "listedShopNum": "0",
+                "vid": "7986724D-7214-4B4B-A184-493E7BD78F47",
+                "areaId": "1",
+                "areaCountryCode": "CN",
+                "freightDiscount": "0",
+                 "createAt": 1743218214000,
+                "lengthList": [
+                    335,
+                    335
+                ],
+                "heightList": [
+                    200,
+                    200
+                ],
+                "widthList": [
+                    225,
+                    225
+                ],
+                "volumeList": [
+                    15075000,
+                    15075000
+                ],
+                "hasVirPacked": 1
+            }
+        ]
+    },
+    "requestId": "b0f251412bd0446cb56ba5988706d964",
+    "success": true
+}
+product
+
+Field	Definition	Type	Length	Note
+productId	Product ID	string	200	
+productName	Product name	list	20	
+nameEn	Product name(EN)	string	200	
+sku	Product sku	string	200	
+bigImage	Product image	string	200	
+totalPrice	Product weight	double	200	unit: $ (USD)
+productType	Product type	byte	200	
+listedShopNum	listed Shop Num	string	48	
+createAt	Added Time	string	200	
+trialFreight	trial Freight	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+2 Variant
+2.1 Inquiry Of All Variants (GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/variant/query
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/variant/query?pid=00006BC5-E1F5-4C65-BE2B-3FE0956DA21C' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+pid	Product id	string	Choose one of two	200	Inquiry criteria
+productSku	Product sku	string	Choose one of two	200	Inquiry criteria
+variantSku	variant sku	string	Choose one of two	200	Inquiry criteria
+countryCode	Country Code	string	No	2	If the parameter has a value, only variants with inventory in that country will be returned. If no value is passed, inventory will not be restricted
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "vid": "1D72A20A-D113-4FAB-B4BA-6FE1A6A14A3A",
+            "pid": "77501FB4-7146-452E-9889-CDF41697E5CF",
+            "variantName": null,
+            "variantNameEn": "Wwerwieurieowursdklfjskldjfklsdjfksljfklsdjfkldsjfksdjfksljfksdlfsfdfgf XS",
+            "variantSku": "CJJSBGBG01517-XS",
+            "variantNum": "1598445624293",
+            "variantStandard": "long=5,width=5,height=5",
+            "variantUnit": null,
+            "variantProperty": null,
+            "variantKey": "[\"XS\"]",
+            "variantLength": 5,
+            "variantWidth": 5,
+            "variantHeight": 5,
+            "variantVolume": 27,
+            "variantWeight": 3.00,
+            "variantSellPrice": 3.00,
+            "createTime": null
+        }
+    ],
+    "requestId": "00765963-35d0-4a6a-b5cf-aa6731793b10"
+}
+Field	Definition	Type	Length	Note
+vid	Variant ID	string	200	
+pid	Product ID	string	200	
+variantName	Variant name	string	200	
+variantNameEn	Variant name (EN)	string	200	
+variantImage	Variant image	string	200	
+variantSku	Variant sku	string	200	
+variantUnit	Variant unit	string	200	
+variantProperty	Variant property	string	200	
+variantKey	Variant Key	string	200	
+variantLength	Variant length	int	200	Unit: mm
+variantWidth	Variant width	int	200	Unit: mm
+variantHeight	Variant height	int	200	Unit: mm
+variantVolume	Variant volume	int	200	Unit: mm3
+variantWeight	Variant weight	int	200	Unit: g
+variantSellPrice	Variant sell price	BigDecimal	200	Unit: $ (USD)
+createTime	Create time	string	200	
+variantStandard	variant standard	string	200	
+variantSugSellPrice	variant suggest sell price	BigDecimal	200	Unit: $ (USD)
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+2.2 Variant Id Inquiry (GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/variant/queryByVid
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/variant/queryByVid?vid=1371342252697325568' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+vid	Variant ID	string	Yes	200	Inquiry criteria
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "vid": "1371342252697325568",
+        "pid": "00006BC5-E1F5-4C65-BE2B-3FE0956DA21C",
+        "variantName": null,
+        "variantNameEn": "a-Baby pacifier chain test1 Grey",
+        "variantSku": "CJJSBGDY00002-Grey",
+        "variantUnit": null,
+        "variantProperty": "[]",
+        "variantKey": "Grey",
+        "variantLength": 3,
+        "variantWidth": 3,
+        "variantHeight": 3,
+        "variantVolume": 27,
+        "variantWeight": 3.00,
+        "variantSellPrice": 3.00,
+        "createTime": "2021-03-15T14:07:26.000+00:00"
+    },
+    "requestId": "9b86a5e2-40c3-492c-92b2-4634fa4c4a21"
+}
+Field	Definition	Type	Length	Note
+vid	Variant id	string	200	
+pid	Product id	string	200	
+variantName	Variant name	string	200	
+variantNameEn	Variant name (EN)	string	200	
+variantImage	Variant image	string	200	
+variantSku	Variant sku	string	200	
+variantNum	Variant num	int	200	Unit: g
+variantUnit	Variant unit	string	200	
+variantProperty	Variant property	string	200	
+variantKey	Variant key	string	200	
+variantLength	Variant length	int	200	Unit: mm
+variantWidth	Variant width	int	200	Unit: mm
+variantHeight	Variant height	int	200	Unit: mm
+variantVolume	Variant volume	int	200	Unit: mm3
+variantWeight	Variant weight	int	200	Unit: g
+variantSellPrice	Variant sell price	BigDecimal	200	Unit: $ (USD)
+createTime	Create time	string	200	
+variantStandard	Variant standard	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+3 Inventory
+3.1 Inventory Inquiry(GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/stock/queryByVid?vid=7874B45D-E971-4DC8-8F59-40530B0F6B77
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/stock/queryByVid?vid=7874B45D-E971-4DC8-8F59-40530B0F6B77' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+vid	Variant id	string	Yes	200	Inquiry criteria
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "vid": "7874B45D-E971-4DC8-8F59-40530B0F6B77",
+            "areaId": "1",
+            "areaEn": "China Warehouse",
+            "countryCode": "CN",
+            "storageNum": 10877
+        }...
+    ],
+    "requestId": "bcde45ac-da31-4fc7-a05e-e3b23a1e6694"
+}
+Field	Definition	Type	Length	Note
+vid	Variant id	bigint	200	
+areaId	Warehouse id	int	20	
+areaEn	Warehouse name	string	200	
+countryCode	Country code(EN)	string	200	
+storageNum	Storage num	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+3.2 Query Inventory by SKU (GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/stock/queryBySku?sku=CJDS2012593
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/stock/queryBySku?sku=CJDS2012593' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+sku	SKU or SPU	string	Yes	200	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "areaEn": "China Warehouse",
+            "areaId": 1,
+            "countryCode": "CN",
+            "totalInventoryNum": 777566,
+            "cjInventoryNum": 0,
+            "factoryInventoryNum": 777566,
+            "countryNameEn": "China"
+        },
+        {
+            "areaEn": "US Warehouse",
+            "areaId": 2,
+            "countryCode": "US",
+            "totalInventoryNum": 36,
+            "cjInventoryNum": 36,
+            "factoryInventoryNum": 0,
+            "countryNameEn": "United States of America (the)"
+        }
+    ],
+    "requestId": "dd4c7d122df24b80a094a4aba073724f",
+    "success": true
+}
+Field	Definition	Type	Length	Note
+vid	Variant id	bigint	200	
+areaId	Warehouse id	int	20	
+areaEn	Warehouse name	string	200	
+countryCode	Country code(EN)	string	200	
+countryNameEn	Country name	string	200	
+totalInventoryNum	total inventory number	int	20	
+cjInventoryNum	Inventory management in CJ warehouse	int	20	
+factoryInventoryNum	Inventory management in CJ factory	int	20	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+4 Product Reviews
+4.1 Inquiry Reviews (GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/comments
+
+Will be deprecated on June 1, 2024, Please use the new api Inquiry Reviews
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/comments?pid=7874B45D-E971-4DC8-8F59-40530B0F6B77' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+pid	Product id	string	Yes	200	Inquiry criteria
+score	score	integer	No	20	Inquiry criteria
+pageNum	page number	int	No	20	default: 1
+pageSize	page size	int	No	20	default: 20
+Return
+success
+
+{
+    "success": true,
+    "code": 0,
+    "message": null,
+    "data": {
+        "pageNum": "1",
+        "pageSize": "1",
+        "total": "285",
+        "list": [
+            {
+                "commentId": 1536993287524069376,
+                "pid": "1534092419615174656",
+                "comment": "excelente estado, llegó en una semana, cumple con lo descrito.\nBuena calidad de audio.",
+                "commentDate": "2022-06-13T00:00:00+08:00",
+                "commentUser": "F***o",
+                "score": "5",
+                "commentUrls": [
+                    "https://cc-west-usa.oss-us-west-1.aliyuncs.com/comment/additional/0001/image/2022-06-15/1126211e-ca15-45ed-95f2-880567ebba37.jpg",
+                    "https://cc-west-usa.oss-us-west-1.aliyuncs.com/comment/additional/0001/image/2022-06-15/291ab894-068f-4f4e-b01f-57df72902f58.jpg"
+                ],
+                "countryCode": "MX",
+                "flagIconUrl": "https://cc-west-usa.oss-us-west-1.aliyuncs.com/national-flags/phone/US.png"
+            }
+        ],
+    "requestId": "bcde45ac-da31-4fc7-a05e-e3b23a1e6694"
+}
+Field	Definition	Type	Length	Note
+pid	Product id	String	200	
+commentId	Comment id	long	20	
+comment	Comment	string	200	
+commentUrls	Comment url	string[]	200	
+commentUser	Comment user	string	200	
+score	score	int	20	
+countryCode	Country code	string	20	
+commentDate	Comment date	string	200	
+flagIconUrl	FlagIcon url	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+4.2 Inquiry Reviews (GET)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/productComments
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/product/productComments?pid=7874B45D-E971-4DC8-8F59-40530B0F6B77' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+pid	Product id	string	Yes	200	Inquiry criteria
+score	score	integer	No	20	Inquiry criteria
+pageNum	page number	int	No	20	default: 1
+pageSize	page size	int	No	20	default: 20
+Return
+success
+
+{
+    "success": true,
+    "code": 0,
+    "message": null,
+    "data": {
+        "pageNum": "1",
+        "pageSize": "1",
+        "total": "285",
+        "list": [
+            {
+                "commentId": 1536993287524069376,
+                "pid": "1534092419615174656",
+                "comment": "excelente estado, llegó en una semana, cumple con lo descrito.\nBuena calidad de audio.",
+                "commentDate": "2022-06-13T00:00:00+08:00",
+                "commentUser": "F***o",
+                "score": "5",
+                "commentUrls": [
+                    "https://cc-west-usa.oss-us-west-1.aliyuncs.com/comment/additional/0001/image/2022-06-15/1126211e-ca15-45ed-95f2-880567ebba37.jpg",
+                    "https://cc-west-usa.oss-us-west-1.aliyuncs.com/comment/additional/0001/image/2022-06-15/291ab894-068f-4f4e-b01f-57df72902f58.jpg"
+                ],
+                "countryCode": "MX",
+                "flagIconUrl": "https://cc-west-usa.oss-us-west-1.aliyuncs.com/national-flags/phone/US.png"
+            }
+        ],
+    "requestId": "bcde45ac-da31-4fc7-a05e-e3b23a1e6694"
+}
+Field	Definition	Type	Length	Note
+pid	Product id	String	200	
+commentId	Comment id	long	20	
+comment	Comment	string	200	
+commentUrls	Comment url	string[]	200	
+commentUser	Comment user	string	200	
+score	score	int	20	
+countryCode	Country code	string	20	
+commentDate	Comment date	string	200	
+flagIconUrl	FlagIcon url	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+5 Sourcing
+5.1 Create Sourcing (POST)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/sourcing/create
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/product/sourcing/create' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "thirdProductId": "",
+                    "thirdVariantId": "",
+                    "thirdProductSku": "",
+                    "productName": "",
+                    "productImage": "",
+                    "productUrl": "",
+                    "remark": "",
+                    "price": ""
+                }'
+Parameter	Definition	Type	Required	Length	Note
+thirdProductId	third product id	string	No	200	
+thirdVariantId	third variant id	string	No	200	
+thirdProductSku	third product sku	string	No	200	
+productName	product name	string	Yes	200	
+productImage	product image	string	Yes	200	
+productUrl	product url	string	No	200	
+remark	remark	string	No	200	
+price	price	BigDecimal	200	Unit: $ (USD)	
+Return
+success
+
+{
+    "success": true,
+    "code": 0,
+    "message": null,
+    "data": {
+        "cjSourcingId": "285",
+        "result"："success",
+     }
+    "requestId": "bcde45ac-da31-4fc7-a05e-e3b23a1e6694"
+}
+Field	Definition	Type	Length	Note
+cjSourcingId	cj sourcing id	string	50	
+result	search results	string	20	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+5.2 Query Sourcing(POST)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/product/sourcing/query
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/product/sourcing/query' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "sourceIds": []
+                }'
+Parameter	Definition	Type	Required	Length	Note
+sourceIds	cj sourcing id	string[]	Yes	200	
+Return
+success
+
+{
+    "success": true,
+    "code": 0,
+    "message": null,
+    "data": {
+        "sourceId": "285",
+        "sourceNumber"："223333",
+        "productId": "3324343434",
+        "variantId"："4545456",
+        "shopId": "285",
+        "shopName"："aaaaaaa",
+        "sourceStatus": "5",
+        "sourceStatusStr"："搜品失败",
+        "cjProductId": "285",
+        "cjVariantSku"："CJ287690900",
+     }
+    "requestId": "bcde45ac-da31-4fc7-a05e-e3b23a1e6694"
+}
+Field	Definition	Type	Length	Note
+sourceId	cj sourcing id	string	50	
+sourceNumber	Search short code	string	20	
+productId	product id	string	50	
+variantId	variant id	string	50	
+shopId	shop id	string	50	
+shopName	shop name	string	50	
+sourceStatus	status	string	10	
+sourceStatusStr	status (chinese)	string	50	
+cjProductId	cj product id	string	50	
+cjVariantSku	cj variant sku	string	50	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← 2 Setting
+04. Storage
+05. Shopping
+1 Order
+1.1 Create Order（POST） (Deprecated)
+This interface is deprecated, please use createOrderV2
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/order/createOrder
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/shopping/order/createOrder' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "orderNumber": "1234",
+                    "shippingZip": "123",
+                    "shippingCountryCode": "US",
+                    "shippingCountry": "123",
+                    "shippingProvince": "123",
+                    "shippingCity": "132",
+                    "shippingAddress": "123213",
+                    "shippingCustomerName": "123213",
+                    "shippingPhone": "111",
+                    "remark": "note",
+                    "fromCountryCode": "CN",
+                    "logisticName": "PostNL",
+                    "houseNumber": "123",
+                    "email": "",
+                    "products": [
+                        {
+                            "vid": "92511400-C758-4474-93CA-66D442F5F787",
+                            "quantity": 1
+                        }
+                    ]
+                }'
+Parameter	Definition	Type	Required	Length	Note
+orderNumber	A unique identifier for the order from CJ partner.	string	Y	50	
+shippingCountryCode	country code	string	Y	200	
+shippingCountry	country	string	Y	200	
+shippingProvince	province	string	Y	200	
+shippingCity	city	string	Y	200	
+shippingAddress	shipping address	string	Y	200	
+shippingCustomerName	shipping name	string	Y	200	
+shippingZip	zip	string	Y	200	
+shippingPhone	phone number	string	Y	200	
+remark	order remark	string	500		
+logisticName	logistic name	string	Y	200	
+fromCountryCode	from	string	Y	200	warehouse
+houseNumber	house number	String	N	20	
+email	email	String	N	50	
+products		list	Y	200	
+vid	variant id	string	Y	200	
+quantity	quantity	string	Y	200	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": "210711100018655344",
+    "requestId": "9eddf3f5-bd3d-4fae-a4f2-028cbb90db97"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+error
+
+{
+   "code": 1600100,
+   "result": false,
+   "message": "Param error",
+   "data": null,
+   "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.2 Create Order V2（POST）
+Create order
+If you want to use balance payment, set payType 2, and the created order will be processed for subsequent operations: adding shopping cart, confirming order, balance payment
+If you do not want to use balance payment, set payType 3
+Add param platformToken to header, The way to obtain platformToken is the same as the way to obtain CJ Access Token. If not required, the value can be empty. (2025-01-08 update)
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/order/createOrderV2
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/shopping/order/createOrderV2' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --header 'platformToken: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "orderNumber": "1234",
+                    "shippingZip": "123",
+                    "shippingCountry": "123",
+                    "shippingCountryCode": "US",
+                    "shippingProvince": "123",
+                    "shippingCity": "132",
+                    "shippingCounty": "",
+                    "shippingPhone": "111",
+                    "shippingCustomerName": "123213",
+                    "shippingAddress": "123213",
+                    "shippingAddress2": "123213",
+                    "taxId": "123",
+                    "remark": "note",
+                    "email": "",
+                    "consigneeID": "",
+                    "payType": "",
+                    "shopAmount": "",
+                    "logisticName": "PostNL",
+                    "fromCountryCode": "CN",
+                    "houseNumber": "123",
+                    "iossType": "",
+                    "platform": "shopify",
+                    "iossNumber": ""
+                    "products": [
+                        {
+                            "vid": "92511400-C758-4474-93CA-66D442F5F787",
+                            "quantity": 1
+                        }
+                    ]
+                }'
+Parameter	Definition	Type	Required	Length	Note
+orderNumber	A unique identifier for the order from CJ partner.	string	Y	50	
+shippingZip	Zip of destination	string	Y	20	
+shippingCountryCode	Country code of destination	string	Y	20	Referer:Country Code, Please use The two-letter code
+shippingCountry	Country of destination	string	Y	50	
+shippingProvince	Province of destination	string	Y	50	
+shippingCity	City of destination	string	Y	50	
+shippingCounty	County of destination	String	N	50	
+shippingPhone	Phone number of destination	string	Y	20	
+shippingCustomerName	Customer name	string	Y	50	
+shippingAddress	Shipping address of destination	string	Y	200	
+shippingAddress2	Shipping address 2 of destination	string	N	200	
+houseNumber	House Number	String	N	20	
+email	Email	String	N	50	
+taxId	Tax Id	string	N	20	
+remark	Order remark	string	N	500	
+consigneeID	consignee id	string	N	20	
+payType	Pay Type=2 (Balance Payment), Pay Type=3 (No Balance Payment)	int	N	10	If using balance payment, payType must be 2
+shopAmount	Order Amount	BigDecimal	N	20	
+logisticName	logistic name	string	Y	50	
+fromCountryCode	Country code of the shipment from	string	Y	20	Referer:Country Code, Please use The two-letter code
+platform	platform(such as shopify)	String	N	20	If this parameter is not used, the default platform type will be used. If you need to activate a specific platform type, you need to find a salesperson to apply for activation.
+iossType	IOSS Type	int	N	20	IOSS Type, Options: 1=No IOSS(The recipient will be required to pay VAT and other related fees when the order is declared without IOSS.), 2=Declare with my own IOSS(Please ensure that the IOSS provided is valid and is linked to the destination country in the EU. The declaration will proceed without IOSS if the destination country is not linked to a correct IOSS.), 3=Declare with CJ’s IOSS(Declaration with your store order amount is recommended. You will be responsible for the relevant risks if you choose to declare with CJ order amount. CJ’s IOSS is not applicable for orders valued above €150, and the recipient will be required to pay VAT.), Config Page(opens new window)
+iossNumber	IOSS Number	String	N	10	If iossType=3, the value is fixed to CJ-IOSS
+products		List	Y	20	
+vid	variant id	string	Y	50	
+quantity	quantity	int	Y	50	
+unitPrice	item pricing	BigDecimal	N	20	
+podProperties	POD customization information	String	N	500	Example:[{"areaName":"LogoArea","links":["https://cc-west-usa.oss-us-west-1.aliyuncs.com/9f0b99e6-17ec-4dcd-8916-fc5d644be993_LOGO_NavyBlue.png"],"type":"1","layer":[ (opens new window)]}]
+platform
+
+value
+shopify
+Lazada
+woocommerce
+tiktok
+aliexpress
+tiktok_us
+Temu
+ebay
+shopee
+shoplazza
+mercado
+allvalue
+nuvemshop
+square
+bigcommerce
+squarespace
+magento
+prestashop
+etsy
+wix
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "orderNumber": "",
+        "orderId": "123434',
+        "shipmentOrderId": "",
+        "iossAmount": ,
+        "iossTaxHandlingFee": ,
+        "iossAmount": ,
+        "postageAmount": ,
+        "productAmount": "",
+        "productOriginalAmount": "",
+        "productDiscountAmount": "",
+        "postageDiscountAmount": "",
+        "postageOriginalAmount": "",
+        "totalDiscountAmount": "",
+        "actualPayment": "",
+        "orderOriginalAmount": "",
+        "cjPayUrl": "",
+        "orderAmount": "",
+        "logisticsMiss": "",
+        "productInfoList": [
+            {
+                "lineItemId": "",
+                "variantId": "",
+                "isGroup": true,
+                "quantity" 10,
+                "subOrderProducts": [
+                    {
+                        "lineItemId": "",
+                        "variantId": "",
+                        "quantity": ""
+                    }
+                ]
+            }
+        ],
+        "orderStatus": "",
+        "interceptOrderReasons": [
+            {
+                "code": 1001,
+                "message": ""
+            }
+        ]
+    },
+    "requestId": "9eddf3f5-bd3d-4fae-a4f2-028cbb90db97"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+data information
+
+Field	Definition	Type	Length	Note
+orderId	cj order id	string	200	
+orderNumber	orderNumber	string	200	
+shipmentOrderId	shipment order id	string	200	
+iossAmount	ioss amount	BigDecimal	（18，2）	Unit: $ (USD）
+iossTaxHandlingFee	ioss tax	BigDecimal	（18，2）	Unit: $ (USD）
+postageAmount	postage amount	BigDecimal	（18，2）	Unit: $ (USD）
+productAmount	product amount	BigDecimal	（18，2）	Unit: $ (USD）
+productOriginalAmount	total amount of products (before discount)	BigDecimal	（18，2）	Unit: $ (USD）
+productDiscountAmount	product discount amount	BigDecimal	（18，2）	Unit: $ (USD）
+postageDiscountAmount	postage discount amount	BigDecimal	（18，2）	Unit: $ (USD）
+postageOriginalAmount	postage amount (before discount)	BigDecimal	（18，2）	Unit: $ (USD）
+totalDiscountAmount	the total amount of the order after discount	BigDecimal	（18，2）	Unit: $ (USD）
+actualPayment	the amount actually paid	BigDecimal	（18，2）	Unit: $ (USD）
+orderOriginalAmount	original order amount	BigDecimal	（18，2）	Unit: $ (USD）
+cjPayUrl	cj pay url	string	200	
+orderAmount	order amount	BigDecimal	200	
+logisticsMiss	logistics missing mark	Boolean	10	
+orderStatus	order status	string	10	
+productInfoList	product information	list		
+interceptOrderReasons	order interception information	list		
+product information
+
+Field	Definition	Type	Length	Note
+lineItemId	lineItemId	string	50	
+variantId	variant id	string	50	
+quantity	quantity	int	20	
+isGroup	Main product label	boolean	10	
+subOrderProducts	combination product	list	10	
+lineItemId	lineItemId	string	50	
+variantId	variant id	string	50	
+quantity	quantity	int	20	
+Order interception information
+
+Field	Definition	Type	Length	Note
+code	code	int	50	
+message	message	string	200	
+error
+
+{
+   "code": 1600100,
+   "result": false,
+   "message": "Param error",
+   "data": null,
+   "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.3 List Order（GET）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/order/list?pageNum=1&pageSize=10
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/shopping/order/list?pageNum=1&pageSize=10' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+pageNum	Page number	int	No	20	Default 1
+pageSize	Quantity of results on each page	int	No	20	Default 20
+orderIds	order id	List	No	100	
+shipmentOrderId	Shipment Order Id	string	No	100	
+status	order status	string	No	200	default: CANCELLED, values: CREATED,IN_CART,UNPAID,UNSHIPPED,SHIPPED,DELIVERED,CANCELLED,OTHER
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "pageNum": 1,
+        "pageSize": 10,
+        "total": 6859,
+        "list": [
+            {
+                "orderId": "1377085655003308032",
+                "orderNum": "50166125936666",
+                "cjOrderId": null,
+                "shippingCountryCode": "SG",
+                "shippingProvince": "Singapore",
+                "shippingCity": "Singapore",
+                "shippingPhone": "6587997352",
+                "shippingAddress": "Singapore,07  Anson  Tanjong  Pagar,79 ANSON ROAD,79 Anson Road #01-01, Phoenix Tower",
+                "shippingCustomerName": "KUDO KANJI ",
+                "remark": "",
+                "orderWeight": 0,
+                "orderStatus": "CREATED",
+                "orderAmount": null,
+                "productAmount": 0,
+                "postageAmount": null,
+                "logisticName": null,
+                "trackNumber": null,
+                "createDate": "2021-03-31 00:46:39",
+                "paymentDate": null,
+                "productList": null
+            }...
+        ]
+    }
+}        
+Field	Definition	Type	Length	Note
+orderId	order id	string	200	
+orderNum	order name	string	200	
+cjOrderId	cj order id	string	200	
+shippingCountryCode	country code	string	200	
+shippingProvince	province	string	200	
+shippingCity	city	string	200	
+shippingAddress	shipping address	string	200	
+shippingCustomerName	shipping name	string	Y	200
+shippingPhone	phone number	string	200	
+remark	order remark	string	500	
+logisticName	logistic name	string	200	
+trackNumber	track number	string	200	
+orderWeight	order weight	int	20	
+orderAmount	order amount	BigDecimal	（18，2）	Unit: $ (USD）
+orderStatus	order status	string	200	
+createDate	create time	string	200	
+paymentDate	pay time	string	200	
+storeCreateDate	Store order creation time	DateTime	1	UTC Time, eg: 2025-03-14 13:21:07
+productAmount	product amount	BigDecimal	（18，2）	Unit: $ (USD）
+postageAmount	postage amount	BigDecimal	（18，2）	Unit: $ (USD）
+Order Status
+
+Order Status	Status	remark
+CREATED	order create	create order, wait confirm
+IN_CART	in cart	wait confirm, api merge this state
+UNPAID	unpaid	confirm order, cj order number create
+UNSHIPPED	unshipped	paid, wait for sending
+SHIPPED	shipped	in transit, get tracking number
+DELIVERED	delivered	clients receving
+CANCELLED	cancelled	
+error
+
+{
+   "code": 1600100,
+   "result": false,
+   "message": "Param error",
+   "data": null,
+   "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.4 Query Order（GET）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/order/getOrderDetail?orderId=210711100018043276
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/shopping/order/getOrderDetail?orderId=210711100018043276&features=f1&features=f2' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Request Parameters
+Parameter	Definition	Type	Required	Length	Note
+orderId	order id	string	Y	200	support: Custom order id, CJ order id
+features	features	List	false	20	If a feature is passed in, the relevant function will be enabled. If multiple features are required, pass multiple feature parameters
+Feature enumeration
+Enumeration	Description
+LOGISTICS_TIMELINESS	Enable querying logistics timeliness. After passing in this feature enumeration, logisticTimelines will be returned in the results
+Response
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "orderId": "210823100016290555",
+        "orderNum": "api_52f268d40b8d460e82c0683955e63cc9",
+        "cjOrderId": null,
+        "shippingCountryCode": "US",
+        "shippingProvince": "Connecticut",
+        "shippingCity": "ftdsr",
+        "shippingPhone": "43514123",
+        "shippingAddress": "rfdxf rfdesr",
+        "shippingCustomerName": "Xu Old",
+        "remark": null,
+        "orderWeight": 20,
+        "orderStatus": "CREATED",
+        "orderAmount": 4.25,
+        "productAmount": 0.57,
+        "postageAmount": 3.68,
+        "logisticName": "CJPacket Ordinary",
+        "trackNumber": null,
+        "createDate": "2021-08-23 11:31:45",
+        "paymentDate": null,
+        "isComplete":1,
+        "fromCountryCode;":"CN",
+        "productList": [
+            {
+                "vid": "1392053744945991680",
+                "quantity": 1,
+                "sellPrice": 0.57
+            }
+        ]
+    },
+    "requestId": "3adccdcb-d41b-4808-996b-c7c5c833d77d"
+}
+Field	Definition	Type	Length	Note
+orderId	order id	string	200	
+orderNum	order name	string	200	
+cjOrderId	cj order id	string	200	
+cjOrderCode	cj order code	string	200	
+fromCountryCode	shipment country code	string	200	
+shippingCountryCode	Recipient country code	string	200	
+shippingProvince	Recipient province	string	200	
+shippingCity	Recipient city	string	200	
+shippingAddress	Recipient address	string	200	
+shippingCustomerName	Recipient name	string	Y	200
+shippingPhone	Recipient phone number	string	200	
+remark	order remark	string	500	
+logisticName	logistic name	string	200	
+trackNumber	track number	string	200	
+orderWeight	order weight	int	20	
+orderAmount	Order amount	BigDecimal	（18,2）	Unit: $ (USD）
+orderStatus	Order status	string	200	
+createDate	Create time	string	200	UTC Time
+paymentDate	Pay time	string	200	UTC Time
+outWarehouseTime	Delivery time	DateTime	1	UTC Time, eg: 2025-03-14 13:21:07
+storeCreateDate	Store order creation time	DateTime	1	UTC Time, eg: 2025-03-14 13:21:07
+productAmount	product amount	BigDecimal	（18,2）	Unit: $ (USD）
+isComplete	Is the order complete? 1: Complete 0: Incomplete	Number	1	
+productList	Product List	list	200	
+- vid	Variant Id	string	200	
+- quantity	quantity	int	20	
+- sellPrice	Sell Price	BigDecimal	（18，2）	unit：$（USA）
+logisticsTimeliness	Logistics Timeliness	Object		
+- logisticsModes	Logistics List	List		
+-- logisticsName	Logistics Name	string		DHL Official
+-- arrivalTime	Arrival Time (Day)	string		3-7 Days
+Order Status
+
+Order Status	Status	remark
+CREATED	order create	create order, wait confirm
+IN_CART	in cart	wait confirm, api merge this state
+UNPAID	unpaid	confirm order, cj order number create
+UNSHIPPED	unshipped	paid, wait for sending
+SHIPPED	shipped	in transit, get tracking number
+DELIVERED	delivered	clients receving
+CANCELLED	cancelled	
+error
+
+{
+   "code": 1600100,
+   "result": false,
+   "message": "Param error",
+   "data": null,
+   "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+Error code and Message
+Error Code	Message
+1600300	order not found
+1600300	orderId must be not empty
+1600300	The maximum number of features is 20
+1.5 Order Delete（DEL）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/order/deleteOrder?orderId=210711100018655344
+
+CURL
+curl --location --request DELETE 'https://developers.cjdropshipping.com/api2.0/v1/shopping/order/deleteOrder?orderId=210711100018655344' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+orderId	order id	string	Y	200	Query
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": "210711100018655344",
+    "requestId": "721341bf-abf8-4d8c-b400-1fbdaef79039"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+error
+
+{
+   "code": 1600100,
+   "result": false,
+   "message": "Param error",
+   "data": null,
+   "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.6 Confirm Order（PATCH）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/order/confirmOrder
+
+CURL
+curl --location --request PATCH 'https://developers.cjdropshipping.com/api2.0/v1/shopping/order/confirmOrder' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "orderId": "210711100018655344"
+                }'
+Parameter	Definition	Type	Required	Length	Note
+orderId	order id	string	Y	200	Query
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": "210711100018655344",
+    "requestId": "721341bf-abf8-4d8c-b400-1fbdaef79039"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+error
+
+{
+    "code": 1603001,
+    "result": false,
+    "message": "order confirm fail",
+    "data": null,
+    "requestId": "7dc61955-c0e8-4731-bb9b-393b4fffeaaf"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+2 Payment
+2.1 Get Balance（GET）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/pay/getBalance
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/shopping/pay/getBalance' \
+                --header 'CJ-Access-Token: 0580277abfe24bcc9fccdc3ede57d334'
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "amount": 87247.32,
+        "noWithdrawalAmount": null,
+        "freezeAmount": null
+    },
+    "requestId": "36fc030a-a110-4318-bc83-f39f9d3e5484"
+}
+Field	Definition	Type	Length	Note
+noWithdrawalAmount	Bonus amount	BigDecimal	（18，2）	Unit: $ (USD）
+freezeAmount	Frozen amount	BigDecimal	（18，2）	Unit: $ (USD）
+amount	Amount	BigDecimal	（18，2）	Unit: $ (USD）
+error
+
+{
+   "code": 1600100,
+   "result": false,
+   "message": "Param error",
+   "data": null,
+   "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+2.2 Pay Balance（POST）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/shopping/pay/payBalance
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/shopping/pay/payBalance' \
+                --header 'CJ-Access-Token: 0580277abfe24bcc9fccdc3ede57d334' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "orderId": "12"
+                }'
+Parameter	Definition	Type	Required	Length	Note
+orderId	Order id	string	Yes	200	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": null,
+    "requestId": "7dbe69b9-dd82-4ee3-907c-a6fca833e3ce"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+error
+
+{
+  "code": 1600100,
+  "result": false,
+  "message": "Param error",
+  "data": null,
+  "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← 4 Storage
+6 Logistics
+1 Logistics
+1.1 Freight Calculation (POST)
+Freight calculation. Bulk purchase products will have designated shipping methods, while dropshipping products will usually have more options.
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/logistic/freightCalculate
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/logistic/freightCalculate' \
+                --header 'Content-Type: application/json' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --data-raw '{
+                    "startCountryCode": "US",
+                    "endCountryCode": "US",
+                    "products": [
+                        {
+                            "quantity": 2,
+                            "vid": "439FC05B-1311-4349-87FA-1E1EF942C418"
+                        }
+                    ]
+                }'
+Parameter	Definition	Type	Required	Length	Note
+startCountryCode	Country of origin	string	yes	200	
+endCountryCode	Country of destination	string	yes	200	
+zip	zip	string	no	200	
+taxId	tax id	string	no	200	
+houseNumber	house number	string	no	200	
+iossNumber	ioss number	string	no	200	
+quantity	Quantity	int	Yes	10	
+vid	Variant id	string	Yes	200	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "logisticAging": "2-5",
+            "logisticPrice": 4.71,
+            "logisticPriceCn": 30.54,
+            "logisticName": "USPS+"
+        }
+    ],
+    "requestId": "0242ad78-eea2-481d-876a-7cf64398f07f"
+}
+Field	Definition	Type	Length	Note
+logisticPrice	Shipping cost in USD	BigDecimal	（18，2）	Unit: $ (USD）
+logisticPriceCn	Shipping cost in CNY	BigDecimal	（18，2）	Unit: ¥ (CNY)
+logisticAging	Shipping time	string	20	
+logisticName	Carrier name	string	20	
+taxesFee	taxes fee	BigDecimal	(18, 2)	Unit：$(USD)
+clearanceOperationFee	customs clearance fee	BigDecimal	(18, 2)	Unit：$(USD)
+totalPostageFee	total postage	BigDecimal	(18, 2)	Unit：$(USD)
+error
+
+{
+    "code": 1600100, 
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+1.2 Freight Calculation Tip(POST)
+Freight calculation. Bulk purchase products will have designated shipping methods, while dropshipping products will usually have more options.
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/logistic/freightCalculateTip
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/logistic/freightCalculateTip' \
+                --header 'Content-Type: application/json' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --data-raw '{
+                    "reqDTOS": [
+                        {
+                            "srcAreaCode": "CN",
+                            "destAreaCode": "US",
+                            "length": 0.3,
+                            "width": 0.4,
+                            "height": 0.5,
+                            "volume": 0.06,
+                            "totalGoodsAmount":123.2,
+                            "productProp": [
+                                "COMMON"
+                            ],
+                            "freightTrialSkuList": [
+                                {
+                                    "skuQuantity": 1,
+                                    "sku": "CJCF104237201AZ"
+                                }
+                            ],
+                            "skuList": [
+                                "CJCF104237201AZ"
+                            ],
+                            "platforms": [
+                                "Shopify"
+                            ]
+                        }
+                    ]
+                }'
+Parameter	Definition	Type	Required	Length	Note
+srcAreaCode	Country of origin	string	no	200	
+destAreaCode	Country of destination	string	no	200	
+customerCode	customer code	string	no	200	
+zip	zip	string	no	200	
+houseNumber	house number	string	no	100	
+iossNumber	ioss number	string	no	200	
+storageIdList	storage id	string	no	100	
+recipientAddress	recipient address	string	no	200	
+city	city	string	no	50	
+recipientName	recipient name	String	no	200	
+skuList	sku list	String[]	no	200	
+town	town	String	no	100	
+phone	phone	String	no	50	
+wrapWeight	wrap weight	int	no	200	
+station	station	String	no	200	
+platforms	platform	String[]	no	200	
+dutyNo	dutyNo	String	no	200	
+email	email	String	no	100	
+province	province	String	no	100	
+recipientAddress1	recipient address1	String	no	200	
+uid	uid	String	no	200	
+recipientId	recipient id	String	no	200	
+recipientAddress2	recipient address2	String	no	200	
+amount	amount	BigDecimal	no	50	
+productTypes	product type	String[]	no	100	
+weight	weight	int	no	100	
+productProp	product prop	String	no	100	
+optionName	option name	String	no	200	
+volumeWeight	volume weight	BigDecimal	no	100	
+orderType	order type	String	no	100	
+totalGoodsAmount	total value of goods	BigDecimal	no	100	
+freightTrialSkuList	freight trial sku list	Object[]			
+productCode	product code	String	no	100	
+sku	sku	String	no	100	
+productPropList	Product attributes	String	no	100	
+productTypeList	product type (0: normal goods, 1: service goods, 3: packaged goods, 4: supplier goods, 5: supplier self-delivered goods, 6: virtual goods, 7: pod personalized goods)	String[]	no	100	
+vid	variant id	String	no	100	
+skuQuantity	sku quantity	int	no	50	
+skuWeight	sku weight	BigDecimal	no	100	
+skuVolume	sku volume	BigDecimal	no	100	
+combinationType	combination type	int	no	50	
+parentVid	parent variant id	String	no	50	
+unsalable	unsalable	int	no	10	
+tailCostQuantity	tail cost quantity	int	no	10	
+privateDeductionQuantity	private Ddeduction quantity	int	no	10	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "arrivalTime": "12-50",
+            "discountFee": 4.09,
+            "discountFeeCNY": 25.30,
+            "volumeWeight": null,
+            "option": {
+                "arrivalTime": "12-50",
+                "cnName": "CJ航空挂号小包",
+                "enName": "CJPacket Postal",
+                "id": "1564849338719199233"
+            },
+            "ruleTips": [
+                {
+                    "expression": "^[\\s\\d\\-（）()+]{6,32}$",
+                    "interceptType": "0",
+                    "max": null,
+                    "min": null,
+                    "msgCode": "1001",
+                    "msgEn": "Must be a 6-32 digit number (only numbers, symbols and spaces are supported).",
+                    "type": "phone"
+                }
+            ],
+            "ruleTipTypes": [
+                "phone"
+            ],
+            "channelId": "1564543005939785730",
+            "error": "",
+            "errorEn": "",
+            "optionId": "1564849338719199233",
+            "postage": 3.55,
+            "postageCNY": 22.00,
+            "priceIncreases": "115",
+            "reSort": "62",
+            "remoteFee": 0,
+            "remoteFeeCNY": 0,
+            "tip": "",
+            "uid": "",
+            "orderId": null,
+            "unWeightChargeTarget": null,
+            "floatMaxPrice": null,
+            "floatMinPrice": null,
+            "logisticsParamRespDTO": null,
+            "message": "Hi, CJ will not accept any disputes when you choose the shipping method, which is not trackable when orders arrived at some countries, states, or cities.",
+            "wrapPostage": 4.09,
+            "wrapPostageCNY": 25.30,
+            "wrapWeight": 0,
+            "stopWords": [],
+            "channel": {
+                "cnName": "促佳燕文航空挂号小包特货",
+                "enName": "燕文航空挂号小包特货",
+                "id": "1564543005939785730"
+            },
+            "cjRespDTO": {
+                "postage": "3.55",
+                "postageCNY": "22.00",
+                "remoteFee": "0.00",
+                "remoteFeeCNY": "0"
+            },
+            "destArea": {
+                "cnName": "美国",
+                "countryId": "233",
+                "enName": "United States of America (the)",
+                "id": "233",
+                "parentId": null,
+                "postCode": "",
+                "shortCode": "US"
+            },
+            "srcArea": {
+                "cnName": "中国",
+                "countryId": "48",
+                "enName": "China",
+                "id": "48",
+                "parentId": null,
+                "postCode": "",
+                "shortCode": "CN"
+            },
+            "dump": false,
+            "zonePrice": [],
+            "allRuleTips": [
+                {
+                    "expression": "^[\\s\\d\\-（）()+]{6,32}$",
+                    "interceptType": "0",
+                    "max": null,
+                    "min": null,
+                    "msgCode": "1001",
+                    "msgEn": "Must be a 6-32 digit number (only numbers, symbols and spaces are supported).",
+                    "type": "phone"
+                }
+            ],
+            "taxesFee": null,
+            "clearanceOperationFee": null
+        }
+    ],
+    "requestId": "55c4708d15d44a499f061582ddbd989b",
+    "success": true
+}
+Field	Definition	Type	Length	Note
+arrivalTime	arrival time	string	200	
+discountFee	discount Fee	BigDecimal	（18，2）	Unit: $ (USD）
+discountFeeCNY	discount Fee CNY	BigDecimal	（18，2）	
+volumeWeight	volume weight	BigDecimal	（18，2）	Unit: $ (USD）
+channelId	channel id	String	200	
+error	error	String	200	
+errorEn	errorEn	String	200	
+optionId	option id	String	100	
+postage	postage	BigDecimal	（18，2）	Unit: $ (USD）
+postageCNY	postage CNY	BigDecimal	（18，2）	Unit: $ (USD）
+priceIncreases	price increases	String	100	
+reSort	reSort	String	100	
+remoteFee	remoteFee	BigDecimal	（18，2）	Unit: $ (USD）
+remoteFeeCNY	remoteFee CNY	BigDecimal	（18，2）	Unit: $ (USD）
+tip	tip	string	200	
+uid	uid	String	200	
+orderId	order id	String	100	
+unWeightChargeTarget	unWeightChargeTarget	BigDecimal	（18，2）	Unit: $ (USD）
+floatMaxPrice	floatMaxPrice	BigDecimal	（18，2）	Unit: $ (USD）
+floatMinPrice	floatMinPrice	BigDecimal	（18，2）	Unit: $ (USD）
+logisticsParamRespDTO	logisticsParamRespDTO	String	200	
+message	message	String	200	
+wrapPostage	wrap postage	BigDecimal	（18，2）	Unit: $ (USD）
+wrapPostageCNY	wrap postage CNY	BigDecimal	（18，2）	Unit: $ (USD）
+wrapWeight	wrap weight	BigDecimal	（18，2）	Unit: $ (USD）
+stopWords	stop Words	String	200	
+channel	channel	Object		
+cnName	name(CN)	String	200	
+enName	name(EN)	String	200	
+id	id	String	200	
+option	option	Object		
+arrivalTime	arrival time	String	100	
+cnName	name(CN)	String	100	
+enName	name(EN)	String	100	
+id	id	String	100	
+taxesFee	taxes fee	BigDecimal	（18，2）	Unit: $ (USD）
+clearanceOperationFee	customs clearance fee	BigDecimal	（18，2）	Unit: $ (USD）
+totalPostageFee	total postage	BigDecimal	(18, 2)	Unit：$(USD)
+allRuleTips	all rule tips	String	200	
+error
+
+{
+    "code": 1600100, 
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+2 Tracking Number
+2.1 Get Tracking Information (GET) Deprecated
+Shipping information can be found upon tracking numbers. You can also visit CJ Logistic Platform(opens new window)
+
+Has deprecated on June 1, 2024, Please use the new api Get Tracking Information
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/logistic/getTrackInfo?trackNumber=CJPKL7160102171YQ
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/logistic/getTrackInfo?trackNumber=CJPKL7160102171YQ
+                                                                                                    &trackNumber=CJPKL7160102171YQ
+                                                                                                    &trackNumber=CJPKL7160102171YQ
+                                                                                                    &trackNumber=CJPKL7160102171YQ
+Parameter	Definition	Type	Required	Length	Note
+trackNumber	trackNumber	string	Yes	200	batch query
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "trackingNumber": "CJPKL7160102171YQ",
+            "logisticName": "CJPacket Sensitive",
+            "trackingFrom": "CN",
+            "trackingTo": "US",
+            "deliveryDay": "13",
+            "deliveryTime": "2021-06-17 07:04:04",
+            "trackingStatus": "In transit",
+            "lastMileCarrier": "CJPacket",
+            "lastTrackNumber": "926112903032124"
+        }
+    ],
+    "requestId": "3426e927-8c50-4687-9ced-623e77d55bd0"
+}
+Field	Definition	Type	Length	Note
+trackingNumber	tracking number	string	200	
+trackingFrom	from	string	20	
+trackingTo	to	string	20	
+deliveryDay	Delivery day	string	200	
+deliveryTime	Delivery time	string	200	
+trackingStatus	tracking status	string	200	
+lastMileCarrier	last mile carrier	string	200	
+lastTrackNumber	last mile tracking number	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1" 
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+2.2 Get Tracking Information (GET)
+Shipping information can be found upon tracking numbers. You can also visit CJ Logistic Platform(opens new window)
+
+URL
+https://developers.cjdropshipping.com/api2.0/v1/logistic/trackInfo?trackNumber=CJPKL7160102171YQ
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/logistic/trackInfo?trackNumber=CJPKL7160102171YQ
+                                                                                                    &trackNumber=CJPKL7160102171YQ
+                                                                                                    &trackNumber=CJPKL7160102171YQ
+                                                                                                    &trackNumber=CJPKL7160102171YQ
+Parameter	Definition	Type	Required	Length	Note
+trackNumber	trackNumber	string	Yes	200	batch query
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": [
+        {
+            "trackingNumber": "CJPKL7160102171YQ",
+            "logisticName": "CJPacket Sensitive",
+            "trackingFrom": "CN",
+            "trackingTo": "US",
+            "deliveryDay": "13",
+            "deliveryTime": "2021-06-17 07:04:04",
+            "trackingStatus": "In transit",
+            "lastMileCarrier": "CJPacket",
+            "lastTrackNumber": "926112903032124"
+        }
+    ],
+    "requestId": "3426e927-8c50-4687-9ced-623e77d55bd0"
+}
+Field	Definition	Type	Length	Note
+trackingNumber	tracking number	string	200	
+trackingFrom	from	string	20	
+trackingTo	to	string	20	
+deliveryDay	Delivery day	string	200	
+deliveryTime	Delivery time	string	200	
+trackingStatus	tracking status	string	200	
+lastMileCarrier	last mile carrier	string	200	
+lastTrackNumber	last mile tracking number	string	200	
+error
+
+{
+    "code": 1600100,
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1" 
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← 5 Shopping
+7 Dispute
+1 Select the list of disputed products（GET）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/disputes/disputeProducts
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/disputes/disputeProducts?orderId=CJPKL7160102171YQ' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+orderId	cj order id	string	yes	100	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "orderId": "75727832844206081",
+        "orderNumber": "1627572766607937536",
+        "productInfoList": [
+            {
+                "lineItemId": "27572784056172547",
+                "cjProductId": "70030020423733248",
+                "cjVariantId": "70030020612476928",
+                "canChoose": true,
+                "price": 23.00,
+                "quantity": 1,
+                "cjProductName": "Hellpoo",
+                "cjImage": "http://d847fcac-392f-4168-8b06-a580a8368dff.jpg",
+                "sku": "CJSJ1041743",
+                "supplierName": "banggood"
+            }
+        ]
+    },
+    "requestId": "11edc6cc84254bb4b3ac74299d5db197",
+    "success": true
+}
+Field	Definition	Type	Length	Note
+orderId	cj order id	string	200	
+orderNumber	customer order number	string	200	
+productInfoList	Product information list	Object[]		
+lineItemId	lineItem id	string	100	
+cjProductId	cj product id	string	100	
+cjVariantId	cj variant id	string	100	
+canChoose	Is it possible to check to open a dispute	boolean		true:yes, false：no
+price	product price	BigDecimal	(18,2)	Unit: $ (USD）
+quantity	quantity	integer	20	
+cjProductName	cj product name	string	200	
+cjImage	cj product image	string	100	
+sku	sku	string	100	
+supplierName	supplier name	string	200	
+error
+
+{
+    "code": 1600100, 
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+2 Confirm the dispute（POST）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/disputes/disputeConfirmInfo
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/disputes/disputeConfirmInfo' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --data-raw '{
+                    "orderId": "62650625018974208",
+                    "productInfoList": [
+                        {
+                            "lineItemId": "1626506252349808640",
+                            "quantity": "1"
+                        }
+                      ]
+                    }'
+Parameter	Definition	Type	Required	Length	Note
+orderId	cj order id	string	yes	100	
+productInfoList	product information	object[]	yes		
+lineItemId	lineItem id	string			
+quantity	quantity	integer	yes		
+price	price	BigDecimal	yes	(18,2)	Unit: $ (USD）
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": {
+        "orderId": "265062501897420801",
+        "orderNumber": "1626506237791440896",
+        "maxProductPrice": 23.00,
+        "maxPostage": 0.00,
+        "maxIossTaxAmount": 0,
+        "maxIossHandTaxAmount": 0,
+        "maxAmount": 23.00,
+        "expectResultOptionList": [
+            "1"
+        ],
+        "productInfoList": [
+            {
+                "lineItemId": "1626506252349808640",
+                "cjProductId": "1570030020423733248",
+                "cjVariantId": "1570030020612476928",
+                "canChoose": false,
+                "price": 23.00,
+                "quantity": 1,
+                "cjProductName": "Hellpoo",
+                "cjImage": "https://d847fcac-392f-4168-8b06-a580a8368dff.jpg",
+                "sku": "CJSJ1041743-A",
+                "supplierName": "banggood"
+            }
+        ],
+        "disputeReasonList": [
+            {
+                "disputeReasonId": 1,
+                "reasonName": "Unfulfilled Order Cancellation"
+            }
+        ]
+    },
+    "requestId": "af336b7bdc364e6391b9d558690b1521",
+    "success": true
+}
+Field	Definition	Type	Length	Note
+orderId	cj order id	string	200	
+orderNumber	order number	string	200	
+expectResultOptionList	expected result	string[]		1: Refund , 2:Reissue
+maxProductPrice	Product price	BigDecimal	(18,2)	Unit: $ (USD）
+maxPostage	Postage	BigDecimal	(18,2)	Unit: $ (USD）
+maxIossTaxAmount	ioss tax amount	BigDecimal	(18,2)	Unit: $ (USD）
+maxIossHandTaxAmount	ioss tax fee amount	BigDecimal	(18,2)	Unit: $ (USD）
+maxAmount	Apply for refund amount	BigDecimal	(18,2)	Unit: $ (USD）
+productInfoList	product information	Object[]		
+canChoose	Whether to check open dispute	boolean	2	false or ture
+price	price	BigDecimal	(18,2)	Unit: $ (USD）
+quantity	quantity	integer	20	
+lineItemId	lineItem id	string	100	
+cjProductId	cj product id	string	100	
+cjVariantId	cj variant id	string	100	
+cjProductName	cj product name	string	200	
+cjImage	cj product image	string	100	
+sku	sku	string	100	
+supplierName	supplier name	string	200	
+disputeReasonList	dispute reason	object []		
+disputeReasonId	dispute reason id	integer	20	
+reasonName	dispute reason name (EN)	string	200	
+error
+
+{
+    "code": 1600100, 
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+3 Create dispute（POST）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/disputes/create
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/disputes/create' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                 --data-raw '{
+                    "orderId": "275727832844206081",
+                    "businessDisputeId": "0000001266",
+                    "disputeReasonId": 1,
+                    "expectType": 1,
+                    "refundType": 1,
+                    "messageText": "gfhfghfghfgh",
+                    "imageUrl": [],
+                    "productInfoList": [
+                        {
+                            "lineItemId": "1627572784056172547",
+                            "quantity": "1"
+                        }
+                    ]
+                }'
+Parameter	Definition	Type	Required	Length	Note
+businessDisputeId	customer business id	string	yes	100	
+orderId	cj order id	string	yes	100	
+disputeReasonId	dispute reason id	integer	yes	10	
+expectType	expect type	integer	yes	20	1: Refund , 2:Reissue
+refundType	Refund type	integer	yes	20	1:balance , 2：platform
+messageText	text message	string	yes	500	
+imageUrl	image url	string []	no	200	
+videoUrl	video url	string []	no	200	
+productInfoList	product information	object[]			
+price	price	BigDecimal	yes	(18,2)	Unit: $ (USD）
+lineItemId	lineItem id	string	100		
+quantity	quantity	integer	yes	10	
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": "true",
+    "redirectUri": "0242ad78-eea2-481d-876a-7cf64398f07f"
+}
+error
+
+{
+    "code": 1600100, 
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+4 Cancel dispute（post）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/disputes/cancel
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/disputes/cancel' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                 --data-raw '{
+                        "orderId": "J1623672949997490176",
+                        "disputeId": "SH1623673863466725376"
+                    }'
+Parameter	Definition	Type	Required	Length	Note
+orderId	CJ order id	string	yes	100	
+disputeId	CJ dispute id	string	yes	100	
+返回
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": "true",
+    "redirectUri": "0242ad78-eea2-481d-876a-7cf64398f07f"
+}
+error
+
+{
+    "code": 1600100, 
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+5 Query the list of disputes（GET）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/disputes/getDisputeList
+
+CURL
+curl --location --request GET 'https://developers.cjdropshipping.com/api2.0/v1/disputes/getDisputeList' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+Parameter	Definition	Type	Required	Length	Note
+orderId	cj order id	string	no	100	
+disputeId	dispute id	integer	no	10	
+orderNumber	order number	string	no	100	
+pageNum	page number	integer	no	10	default: 1
+pageSize	page size	integer	no	10	default: 10
+Return
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": "",
+    "redirectUri": "0242ad78-eea2-481d-876a-7cf64398f07f"
+}
+返回字段	字段意思	字段类型	长度	备注
+pageNum	page number	int	20	
+pageSize	page size	int	20	
+total	total	int	20	
+list		List		
+status	dispute status	string	20	
+id	dispute id	string		
+disputeReason	dispute reason	string		
+replacementAmount	Reissue amount	BigDecimal	(18,2)	Unit: $ (USD）
+resendOrderCode	Reissue order id	string		
+money	final refund amount	BigDecimal	(18,2)	Unit: $ (USD）
+finallyDeal	final negotiation result	integer		1:Refund, 2: Reissue, 3: Reject
+createDate	create date			
+productList	product information	Object[]		
+image	product image	string		
+price	product price			
+lineItemId	lineItem id	string	100	
+cjProductId	product id	string		
+cjVariantId	variant id	string	100	
+productName	product name	string		
+supplierName	supplier name	string		
+error
+
+{
+    "code": 1600100, 
+    "result": false,
+    "message": "Param error",
+    "data": null,
+    "requestId": "323fda9d-3c94-41dc-a944-5cc1b8baf5b1"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← 6 Logistic
+08. Webhook
+1 Setting
+1.1 Message Setting（POST）
+URL
+https://developers.cjdropshipping.com/api2.0/v1/webhook/set
+
+CURL
+curl --location --request POST 'https://developers.cjdropshipping.com/api2.0/v1/webhook/set' \
+                --header 'CJ-Access-Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                    "product": {
+                        "type": "ALL",
+                        "callbackUrls": [
+                            "http://localhsost:8080/api2.0/"
+                        ]
+                    },
+                    "stock": {
+                        "type": "ALL",
+                        "callbackUrls": [
+                            "http://localhsost:8080/api2.0/"
+                        ]
+                    },
+                    "order": {
+                        "type": "ALL",
+                        "callbackUrls": [
+                            "http://localhsost:8080/api2.0/"
+                        ]
+                    },
+                    "logistics": {
+                        "type": "ALL",
+                        "callbackUrls": [
+                            "http://localhsost:8080/api2.0/"
+                        ]
+                    }
+                }'
+Parameter	Definition	Type	Required	Length	Note
+product	Product Message	object	Y	200	Product Message Setting
+- type	Product Message type	string	Y	200	ALL，CANCEL
+- callbackUrls	callback url	list	Y	5	
+stock	Stock Message	object	Y	200	Stock Message Setting
+- type	Stock Message type	string	Y	200	ALL，CANCEL
+- callbackUrls	callback url	list	Y	5	
+order	Order Message	object	Y	200	order Message Setting
+- type	Message type	string	Y	200	ALL，CANCEL
+- callbackUrls	callback url	list	Y	5	
+logistics	Logistics Message	object	Y	200	logistics Message Setting
+- type	Message type	string	Y	200	ALL，CANCEL
+- callbackUrls	callback url	list	Y	5	
+Result
+success
+
+{
+    "code": 200,
+    "result": true,
+    "message": "Success",
+    "data": true,
+    "requestId": "97367e0f-cf3a-4c9b-acea-a36fb56f81b8"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+error
+
+{
+    "code": 1601000,
+    "result": false,
+    "message": "User not find",
+    "data": null,
+    "requestId": "a18c9793-7c99-42f9-970b-790eecdceba2"
+}
+Field	Definition	Type	Length	Note
+code	error code	int	20	Reference error code
+result	Whether or not the return is normal	boolean	1	
+message	return message	string	200	
+data	return data	object		interface data return
+requestId	requestId	string	48	Flag request for logging errors
+← 7 Dispute
